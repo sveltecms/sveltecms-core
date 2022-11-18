@@ -1,0 +1,11 @@
+.DS_Store
+node_modules
+/build
+/.svelte-kit
+.env
+.env.*
+!.env.example
+.vscode
+test
+package-lock.json
+src/admin/types/dynamically/*
