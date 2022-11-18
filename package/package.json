@@ -3,7 +3,7 @@
     "bin": "./main.js",
     "name": "sveltecms-init",
     "version": "0.0.7",
-    "repository": {"url": "https://github.com/sveltecms/sveltecms"},
+    "repository": {"url": "https://github.com/sveltecms/sveltecms-core"},
     "description": "Add svelteCMS to your svelte kit project.",
     "main": "./main.js",
     "keywords": [
