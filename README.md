@@ -4,7 +4,13 @@
 npm create svelte@latest appName
 cd appName
 ```
-### Or if project already exists, just add svelteCMS using npx
+![create svelte kit](./package/images//step-1.png)
+### Make sure you select TypeScript
+##### Since svelteCMS uses TypeScript to auto generate routes and routes objects types
+![create svelte kit](./package/images//step-2.png)
+### Next, choose your app config
+![create svelte kit](./package/images//step-3.png)
+### Or just add svelteCMS to an existing using npx
 ``` bash
 npx sveltecms-init
 ```

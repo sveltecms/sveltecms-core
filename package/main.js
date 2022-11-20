@@ -1,6 +1,8 @@
 #! /usr/bin/env node
 import fs from "fs"
 import { execSync } from "child_process"
+import { defaultAsset,config } from "./utils.js"
+import { MongoClient,ObjectId } from "mongodb"
 
 const FIND_DB_URL = process.argv.find(data=>data.includes("--dbUrl"))
 const DB_URL = FIND_DB_URL ? FIND_DB_URL.includes('=') ? FIND_DB_URL.split("=")[1].trim() : null : null
@@ -16,6 +18,12 @@ const DOT_ENV_VARIABLES = {
 const PACKAGE_JSON_DATA = JSON.parse(fs.readFileSync(`${SVELTE_CMS_BUILD_PATH}/dependencies.json`).toString())
 const DEV_DEPENDENCIES = PACKAGE_JSON_DATA['devDependencies']
 const DEPENDENCIES = PACKAGE_JSON_DATA['dependencies']
+
+/** MongoDB clint */
+const MONGODB_CLIENT = new MongoClient(DOT_ENV_VARIABLES.DATABASE_URL)
+await MONGODB_CLIENT.connect()
+/** MongoDB database */
+const DATABASE = MONGODB_CLIENT.db(DOT_ENV_VARIABLES.DATABASE_NAME)
 
 // Copy folder to project src
 console.log("Cloning admin folders")
@@ -82,6 +90,11 @@ for(const [dependency,dependencyData] of Object.entries(DEPENDENCIES)){
 }
 fs.writeFileSync(`${CWD}/package.json`,JSON.stringify(packageJsonData,null,4))
 
+// Create default asset
+DATABASE.collection(config.acn).insertOne({...defaultAsset,_id:new ObjectId(defaultAsset['_id'])})
+
 console.log("Running npm install")
 execSync(`npm i`)
 console.log("Done")
+// Close database connection
+await MONGODB_CLIENT.close()
