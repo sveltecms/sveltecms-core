@@ -96,5 +96,4 @@ DATABASE.collection(config.acn).insertOne({...defaultAsset,_id:new ObjectId(defa
 console.log("Running npm install")
 execSync(`npm i`)
 console.log("Done")
-// Close database connection
-await MONGODB_CLIENT.close()
+execSync("npm run dev")
