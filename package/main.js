@@ -95,5 +95,5 @@ fs.writeFileSync(`${CWD}/package.json`,JSON.stringify(packageJsonData,null,4))
 DATABASE.collection(config.acn).insertOne({...defaultAsset,_id:new ObjectId(defaultAsset['_id'])})
 
 console.log("Running npm install")
-execSync(`npm i`)
+await MONGODB_CLIENT.close()
 console.log("Done")
