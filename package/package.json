@@ -2,7 +2,7 @@
     "type": "module",
     "bin": "./main.js",
     "name": "sveltecms-init",
-    "version": "0.4.0",
+    "version": "0.7.0",
     "repository": {
         "url": "https://github.com/sveltecms/sveltecms-core"
     },

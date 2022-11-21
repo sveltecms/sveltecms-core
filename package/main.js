@@ -92,7 +92,6 @@ for(const [dependency,dependencyData] of Object.entries(DEPENDENCIES)){
 fs.writeFileSync(`${CWD}/package.json`,JSON.stringify(packageJsonData,null,4))
 
 // Create default asset 
-DATABASE.collection(config.acn).insertOne({...defaultAsset,_id:new ObjectId(defaultAsset['_id'])})
-console.log("Running npm install")
-await MONGODB_CLIENT.close()
-console.log("Done")
+await DATABASE.collection(config.acn).insertOne({...defaultAsset,_id:new ObjectId(defaultAsset['_id'])})
+MONGODB_CLIENT.close()
+console.log("Next steps:\n    npm install")
