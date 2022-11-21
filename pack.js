@@ -12,7 +12,7 @@ const PACKAGE_JSON_DATA = JSON.parse(fs.readFileSync(`${CWD}/package.json`).toSt
 const DEV_DEPENDENCIES = PACKAGE_JSON_DATA['devDependencies']
 const DEPENDENCIES = PACKAGE_JSON_DATA['dependencies']
 
-// Remove svelteSMC folder if exists
+// Remove svelteSMC folder if exists 
 if(fs.existsSync(VERSION_PATH)) fs.rmSync(VERSION_PATH,{recursive:true})
 fs.mkdirSync(VERSION_PATH)
 // Admin core
@@ -31,6 +31,7 @@ fs.writeFileSync(`${PROJECT_ASSETS_PATH}/audios/.gitkeep`,"")
 fs.writeFileSync(`${PROJECT_ASSETS_PATH}/images/.gitkeep`,"")
 fs.writeFileSync(`${PROJECT_ASSETS_PATH}/videos/.gitkeep`,"")
 fs.writeFileSync(`${PROJECT_ASSETS_PATH}/other/.gitkeep`,"")
+fs.copyFileSync(`${ADMIN_STATIC_PATH}/no-image.jpeg`,`${PROJECT_ASSETS_PATH}/images/no-image.jpeg`)
 
 // Add dependencies
 const dependenciesData = { devDependencies:DEV_DEPENDENCIES,dependencies:DEPENDENCIES }

@@ -90,7 +90,7 @@ for(const [dependency,dependencyData] of Object.entries(DEPENDENCIES)){
 }
 fs.writeFileSync(`${CWD}/package.json`,JSON.stringify(packageJsonData,null,4))
 
-// Create default asset
+// Create default asset 
 DATABASE.collection(config.acn).insertOne({...defaultAsset,_id:new ObjectId(defaultAsset['_id'])})
 
 console.log("Running npm install")
