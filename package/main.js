@@ -40,6 +40,7 @@ fs.mkdirSync(`${PROJECT_ASSETS_PATH}/audios/`)
 fs.mkdirSync(`${PROJECT_ASSETS_PATH}/images/`)
 fs.mkdirSync(`${PROJECT_ASSETS_PATH}/videos/`)
 fs.mkdirSync(`${PROJECT_ASSETS_PATH}/other/`)
+fs.copyFileSync(`${SVELTE_CMS_BUILD_PATH}/assets/images/no-image.jpeg`,`${PROJECT_ASSETS_PATH}/images/no-image.jpeg`)
 
 // Copy admin static assets
 const staticAdminAssetsPath = `${CWD}/static/admin/`
@@ -96,4 +97,3 @@ DATABASE.collection(config.acn).insertOne({...defaultAsset,_id:new ObjectId(defa
 console.log("Running npm install")
 execSync(`npm i`)
 console.log("Done")
-execSync("npm run dev")
