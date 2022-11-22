@@ -1,38 +1,54 @@
+// @ts-check
 import fs from "fs"
 import { execSync } from "child_process"
 
 const CWD = process.cwd()
-const SRC_PATH = `${CWD}/src`
-const ADMIN_PATH = `${SRC_PATH}/admin/`
-const ADMIN_ROUTE_PATH = `${SRC_PATH}/routes/admin/`
-const ADMIN_STATIC_PATH = `${CWD}/static/admin/`
-const VERSION_PATH = `${CWD}/package/svelteCMS`
-const PROJECT_ASSETS_PATH = `${VERSION_PATH}/assets`
-const PACKAGE_JSON_DATA = JSON.parse(fs.readFileSync(`${CWD}/package.json`).toString())
-const DEV_DEPENDENCIES = PACKAGE_JSON_DATA['devDependencies']
-const DEPENDENCIES = PACKAGE_JSON_DATA['dependencies']
+/** src path */
+const srcPath = `${CWD}/src`
+/** svelteCMS package path */
+const svelteCMSPackagePath = `${CWD}/package/src/svelteCMS`
+/** svelteCMS json config path */
+const svelteConfigJsonPath = `${svelteCMSPackagePath}/config.json`
+/** svelteCMS initial config data */
+const svelteConfigJsonData = { alias:{},devDependencies:{},dependencies:{} }
+/** Path to svelte.config.js */
+const svelteConfigPath = `${CWD}/svelte.config.js`
+const svelteConfigData = fs.readFileSync(svelteConfigPath).toString()
+const svelteCMSAlias = svelteConfigData.split("//<svelteCMSAlias>\n")[1].split("//</svelteCMSAlias>")[0].trimEnd()
+// package json
+const sveltePackageJsonPath = `${CWD}/package.json`
+const sveltePackageJsonData = JSON.parse(fs.readFileSync(sveltePackageJsonPath).toString())
+const svelteDependencies = sveltePackageJsonData['dependencies']
+const svelteDevDependencies = sveltePackageJsonData['devDependencies']
+// Add data to json data
+svelteConfigJsonData['alias'] = svelteCMSAlias
+svelteConfigJsonData['dependencies'] = svelteDependencies
+svelteConfigJsonData['devDependencies'] = svelteDevDependencies
 
-// Remove svelteSMC folder if exists 
-if(fs.existsSync(VERSION_PATH)) fs.rmSync(VERSION_PATH,{recursive:true})
-fs.mkdirSync(VERSION_PATH)
-// Admin core
-execSync(`cp -a ${ADMIN_PATH} ${VERSION_PATH}/admin/`)
-// Admin routes
-execSync(`cp -a ${ADMIN_ROUTE_PATH} ${VERSION_PATH}/adminRoutes/`)
-execSync(`cp -a ${ADMIN_STATIC_PATH} ${VERSION_PATH}/adminStatic/`)
+/** Check if svelteCMS folder exists */
+const svelteCMSExist = fs.existsSync(svelteCMSPackagePath)
+// If svelteCMS folder exists, remove it
+if(svelteCMSExist) fs.rmSync(svelteCMSPackagePath,{recursive:true})
+// Create svelteCMS folder
+fs.mkdirSync(svelteCMSPackagePath)
+
+// Copy admin folder to svelteCMS package
+execSync(`cp -a ${srcPath}/admin/ ${svelteCMSPackagePath}/admin/`)
+// Copy admin routes folder to svelteCMS package
+execSync(`cp -a ${srcPath}/routes/admin/ ${svelteCMSPackagePath}/adminRoutes/`)
+// Copy admin static folder to svelteCMS package
+execSync(`cp -a ${CWD}/static/admin/ ${svelteCMSPackagePath}/adminStatic/`)
 
 // Make assets folder and sub folders
-fs.mkdirSync(PROJECT_ASSETS_PATH)
-fs.mkdirSync(`${PROJECT_ASSETS_PATH}/audios/`)
-fs.mkdirSync(`${PROJECT_ASSETS_PATH}/images/`)
-fs.mkdirSync(`${PROJECT_ASSETS_PATH}/videos/`)
-fs.mkdirSync(`${PROJECT_ASSETS_PATH}/other/`)
-fs.writeFileSync(`${PROJECT_ASSETS_PATH}/audios/.gitkeep`,"")
-fs.writeFileSync(`${PROJECT_ASSETS_PATH}/images/.gitkeep`,"")
-fs.writeFileSync(`${PROJECT_ASSETS_PATH}/videos/.gitkeep`,"")
-fs.writeFileSync(`${PROJECT_ASSETS_PATH}/other/.gitkeep`,"")
-fs.copyFileSync(`${ADMIN_STATIC_PATH}/no-image.jpeg`,`${PROJECT_ASSETS_PATH}/images/no-image.jpeg`)
+fs.mkdirSync(`${svelteCMSPackagePath}/assets/`)
+fs.mkdirSync(`${svelteCMSPackagePath}/assets/images/`)
+fs.mkdirSync(`${svelteCMSPackagePath}/assets/videos/`)
+fs.mkdirSync(`${svelteCMSPackagePath}/assets/audios/`)
+fs.mkdirSync(`${svelteCMSPackagePath}/assets/other/`)
+fs.writeFileSync(`${svelteCMSPackagePath}/assets/images/.gitkeep`,"")
+fs.writeFileSync(`${svelteCMSPackagePath}/assets/videos/.gitkeep`,"")
+fs.writeFileSync(`${svelteCMSPackagePath}/assets/audios/.gitkeep`,"")
+fs.writeFileSync(`${svelteCMSPackagePath}/assets/other/.gitkeep`,"")
 
-// Add dependencies
-const dependenciesData = { devDependencies:DEV_DEPENDENCIES,dependencies:DEPENDENCIES }
-fs.writeFileSync(`${VERSION_PATH}/dependencies.json`,JSON.stringify(dependenciesData,null,4))
+// Save svelteCMS config json
+fs.writeFileSync(svelteConfigJsonPath,JSON.stringify(svelteConfigJsonData,null,4))

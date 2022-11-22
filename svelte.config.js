@@ -8,7 +8,7 @@ const config = {
 	kit: {
 		adapter: adapter(),
         alias:{
-            // Alias needed for svelteCMS
+            //<svelteCMSAlias>
             $svelteCMS:"src/admin/svelteCMS.ts",
             $Utils:"src/admin/utils.ts",
             $Stores:"src/admin/stores.ts",
@@ -18,8 +18,7 @@ const config = {
             $Elements:"src/admin/elements/",
             $Icons:"src/admin/icons/",
             $Packages:"src/admin/packages/"
-            // Alias needed for svelteCMS end
-            ,
+            //</svelteCMSAlias>
         }
 	}
 };
