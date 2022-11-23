@@ -1,5 +1,9 @@
 import { execSync } from "child_process"
 import { ObjectId } from "mongodb"
+import bcrypt from "bcrypt"
+
+/** Root user password */
+const rootUserPassword = await bcrypt.hash("sveltecms.dev",10)
 
 /** Default data */
 export const defaultData = {
@@ -10,6 +14,22 @@ export const defaultData = {
         path: "no-image.jpeg",
         type: "image",
         extension: "jpeg"
+    },
+    /** Default root users */
+    rootUser:{
+        firstName:"root",
+        lastName:"user",
+        email:"root@sveltecms.dev",
+        password:rootUserPassword,
+        image:{
+            _id: "111d45db1000c382457b0111",
+            name: "No image",
+            path: "no-image.jpeg",
+            type: "image",
+            extension: "jpeg"
+        },
+        verified:true,
+        role:"root"
     },
     envs:{
         DATABASE_URL:"mongodb://localhost:27017/",

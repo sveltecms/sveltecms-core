@@ -70,13 +70,13 @@ async function Main(){
     if(projectDependencies){
         for(const [dName,dValue] of Object.entries(projectDependencies)){
             const dependenciesExists = dName in svelteCMSConfigObject['dependencies']
-            // If dependency exists in svelteCMS depencies remove it
+            // If dependency exists in svelteCMS dependencies remove it
             if(dependenciesExists) delete svelteCMSConfigObject['dependencies'][dName]
         }
     }
     for(const [dName,dValue] of Object.entries(projectDevDependencies)){
         const dependenciesExists = dName in svelteCMSConfigObject['devDependencies']
-        // If dependency exists in svelteCMS dev depencies remove it
+        // If dependency exists in svelteCMS dev dependencies remove it
         if(dependenciesExists) delete svelteCMSConfigObject['devDependencies'][dName]
     }
     // If project do not has any dependencies, add default
@@ -112,12 +112,16 @@ async function Main(){
     await mongoClient.connect()
     const database = mongoClient.db(defaultData.envs.DATABASE_NAME)
     const assetsCollection = database.collection("__assets")
+    const usersCollection = database.collection("__users")
+    // Create default asset
     await assetsCollection.insertOne(defaultData.asset)
+    // Create default root admin
+    await usersCollection.insertOne(defaultData.rootUser)
+    // Close db connection
     await mongoClient.close()
-
     log.green("svelteCMS was installed")
     log.green("running npm install, please wait")
     execSync("npm install")
-    log.green("All done\n    run: npm run dev (start dev mode)")
+    log.green("All done\n    run: npm run dev")
 }
 Main()
