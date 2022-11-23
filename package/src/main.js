@@ -31,7 +31,6 @@ async function Main(){
         log.red(`Look like ${DATABASE_PROVIDER} is not installed or not running`)
         return
     }
-    // Else run code to next step
 
     /** Check if .env file exists */
     const envFileExists = fs.existsSync(projectEnvPath)
@@ -113,10 +112,18 @@ async function Main(){
     const database = mongoClient.db(defaultData.envs.DATABASE_NAME)
     const assetsCollection = database.collection("__assets")
     const usersCollection = database.collection("__users")
-    // Create default asset
-    await assetsCollection.insertOne(defaultData.asset)
-    // Create default root admin
-    await usersCollection.insertOne(defaultData.rootUser)
+    /** Check if default asset exists */
+    const defaultAssetExists = await assetsCollection.findOne({_id:defaultData.asset._id})
+    /** Check if default root user exists */
+    const defaultRootUserExists = await assetsCollection.findOne({_id:defaultData.rootUser._id})
+    // Create default asset, if do not exists
+    if(!defaultAssetExists){
+        await assetsCollection.insertOne(defaultData.asset)
+    }
+    // Create default root admin, if do not exists
+    if(!defaultRootUserExists){
+        await usersCollection.insertOne(defaultData.rootUser)
+    }
     // Close db connection
     await mongoClient.close()
     log.green("svelteCMS was installed")

@@ -1,11 +1,10 @@
 <script lang="ts">
     export let data:PageServerData
-    _assets.set(data.assets)
+    ASSETS.set(data.assets)
     import type { PageServerData } from "./$types"
     import type { AssetData } from "$Packages/fileUploader/types";
     import svelteCMS from "$svelteCMS";
-    import { wait } from "$Utils";
-    import { _assets } from "$Stores"
+    import { ASSETS } from "$Stores"
     // Icons
     import PlusIcon from "$Icons/Plus.svelte";
     // Components
@@ -21,7 +20,7 @@
         const assetInAssets = assets.find(data=>data._id===selectedAsset._id)
         // Add selected asset to assets list
         if(!assetInAssets){
-            _assets.set([...$_assets,selectedAsset])
+            ASSETS.set([...$ASSETS,selectedAsset])
             assets = [...assets,selectedAsset]
         }
     }
@@ -40,5 +39,5 @@
 
 <FileUploader bind:open={isFileUploaderOpen} apiBaseUrl={assetsApiBasePath} on:select={handleFileSelect}/>
 <TitleButton title="All Assets" on:click={()=>isFileUploaderOpen=true} icon={PlusIcon}/>
-<Assets {assets}/>
-<Button {loading} text="Load more" --width="fit-content"/>
+<Assets assets={$ASSETS}/>
+<!-- <Button {loading} text="Load more" --width="fit-content"/> -->

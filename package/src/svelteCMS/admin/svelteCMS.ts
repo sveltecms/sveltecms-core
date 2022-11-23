@@ -49,7 +49,11 @@ export default {
         /** Tags collection base */
         tcb:"__tags",
         /** Assets per page */
-        assetsPerPage:24,
+        assetsPerPage:24
+    },
+    diskPaths:{
+        /** Disk path where assets will be storage */
+        assets:"assets",
     },
     defaults:{
         // Default image when no image available

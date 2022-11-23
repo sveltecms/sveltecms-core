@@ -13,7 +13,6 @@
     import Label from "$Elements/Label.svelte";
     import Input from "$Elements/Input.svelte";
     import Button from "$Comps/Button.svelte";
-    import ButtonSelector from "$Elements/buttonSelector/ButtonSelector.svelte";
     import SelectOption from "$Elements/SelectOption.svelte";
     import { createEventDispatcher } from "svelte"
     /** Reset element editor's values */

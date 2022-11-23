@@ -4,12 +4,12 @@
 npm create svelte@latest appName
 cd appName
 ```
-![create svelte kit](./src/images/step-1.png)
+![create svelte kit](https://github.com/sveltecms/sveltecms-core/raw/main/package/src/images/step-1.png)
 ### Make sure you select TypeScript
 ##### Since svelteCMS uses TypeScript to auto generate routes and routes objects types
-![create svelte kit](./src/images/step-2.png)
+![create svelte kit](https://github.com/sveltecms/sveltecms-core/raw/main/package/src/images/step-2.png)
 ### Next, choose your app config
-![create svelte kit](./src/images/step-3.png)
+![create svelte kit](https://github.com/sveltecms/sveltecms-core/raw/main/package/src/images/step-3.png)
 ### Or just add svelteCMS to an existing using npx
 ``` bash
 npx sveltecms-init@latest
@@ -26,4 +26,9 @@ npx sveltecms-init@latest --dbUrl=mongodb+srv://someUrl:<password>-@user.mongodb
 npx sveltecms-init@latest
 # or pass your mongodb url
 npx sveltecms-init@latest --dbUrl=mongodb_url
+```
+#### Update svelteCMS
+Simple, just run the same command
+```
+npx sveltecms-init@latest
 ```

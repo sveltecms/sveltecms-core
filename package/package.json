@@ -1,11 +1,11 @@
 {
     "type": "module",
     "bin": "./src/main.js",
-    "name": "sveltecms-test",
+    "name": "sveltecms-init",
     "files": [
         "./src"
     ],
-    "version": "0.8.0",
+    "version": "0.9.0",
     "repository": {
         "url": "https://github.com/sveltecms/sveltecms-core"
     },

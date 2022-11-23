@@ -37,15 +37,13 @@
         width: 100%;
         padding: 10px 5px;
         text-align: center;
-        background-color: rgba(0,0,0,.7);
+        background-color: rgba(0,0,0,.9);
         color: white;
         font-size: 14px;
         font-weight: 400;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
     }
     .image{
         display: flex;

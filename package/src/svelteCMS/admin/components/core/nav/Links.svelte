@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { CategoriesRoutes,TagsRoutes } from "$Stores"
+    import { CATEGORIES_ROUTES,TAGS_ROUTES } from "$Stores"
     // Components
     import Link from "./Link.svelte"
     import ExternalLink from "./ExternalLink.svelte"
@@ -13,9 +13,9 @@
     // import SettingsIcon from "$Icons/Gear.svelte"
     import DisplayIcon from "$Icons/Display.svelte"
     /** If any routes includes categories, use one of the as the default categories link */
-    $: categoriesLink = $CategoriesRoutes.length>0 ? `/admin/categories/${$CategoriesRoutes[0]}` : "/admin/categories"
+    $: categoriesLink = $CATEGORIES_ROUTES.length>0 ? `/admin/categories/${$CATEGORIES_ROUTES[0]}` : "/admin/categories"
     /** If any routes includes tags, use one of the as the default tags link */
-    $: tagsLink = $TagsRoutes.length>0 ? `/admin/tags/${$TagsRoutes[0]}` : "/admin/tags"
+    $: tagsLink = $TAGS_ROUTES.length>0 ? `/admin/tags/${$TAGS_ROUTES[0]}` : "/admin/tags"
 </script>
 
 <ul class="links">

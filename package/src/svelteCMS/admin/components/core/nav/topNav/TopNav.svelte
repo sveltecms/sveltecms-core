@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { IsNavOpen } from "$Stores";
+    import { IS_NAV_OPEN } from "$Stores";
     import Logo from "./Logo.svelte"
     import Search from "./Search.svelte";
     import ProfileImage from "./ProfileImage.svelte";
@@ -11,7 +11,7 @@
     <Search />
     <div class="rightMenu">
         <ProfileImage />
-        <BurgerButton bind:open={$IsNavOpen}/>
+        <BurgerButton bind:open={$IS_NAV_OPEN}/>
     </div>
 </header>
 

@@ -1,7 +1,9 @@
 <script lang="ts">
     export let data:PageServerData
+    ASSETS.set(data.assets)
+    USERS.set(data.users)
     import type { PageServerData } from "./$types"
-    import { Routes as ROUTES } from "$Stores"
+    import { ROUTES,USERS,ASSETS } from "$Stores"
     import PageTitle from "$Comps/PageTitle.svelte";
     import PageTitleLink from "$Comps/PageTitleLink.svelte";
     import Stats from "$Comps/shared/stats/Stats.svelte";
@@ -15,6 +17,6 @@
 <PageTitleLink title="Latest routes" href="/admin/routes" linkText="View routes"/>
 <Routes routes={$ROUTES}/>
 <PageTitleLink title="Latest users" href="/admin/users" linkText="View users"/>
-<Users users={data.users}/>
+<Users users={$USERS}/>
 <PageTitleLink title="Latest assets" href="/admin/assets" linkText="View assets"/>
-<Assets assets={data.assets}/>
+<Assets assets={$ASSETS}/>

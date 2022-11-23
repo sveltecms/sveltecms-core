@@ -4,7 +4,7 @@
     import type { DeleteRouteLoad,DeleteRouteRes } from "$Types/api"
     import { postJson } from "$Utils";
     import { newToast } from "$Packages/svelteToasts";
-    import { Routes as RoutesStore } from "$Stores"
+    import { ROUTES } from "$Stores"
     import Route from "./Route.svelte";
     /** handle route deletion */
     async function handleRouteDelete(e:any){
@@ -15,7 +15,7 @@
         // If route was deleted
         if(apiResponse.ok){
             const newRoutes = routes.filter(data=>data.ID!==route.ID)
-            RoutesStore.set(newRoutes)
+            ROUTES.set(newRoutes)
             newToast({type:"ok",msg:apiResponse.msg})
         } 
         // If route was not deleted

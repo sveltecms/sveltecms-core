@@ -1,6 +1,6 @@
 import db from "$Database"
 import svelteCMS from "$svelteCMS"
-import { _assets } from "$Stores"
+import { ASSETS } from "$Stores"
 import type { AssetData } from "$Packages/fileUploader/types"
 import type { PageServerLoad } from "./$types"
 
@@ -11,6 +11,6 @@ export const load:PageServerLoad = async()=> {
     const assetsDB:any[] = await cursor.toArray()
     const assets:AssetData[] = assetsDB
     // Set server store
-    _assets.set(assets)
+    ASSETS.set(assets)
     return { assets }    
 }

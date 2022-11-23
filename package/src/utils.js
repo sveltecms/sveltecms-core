@@ -17,6 +17,7 @@ export const defaultData = {
     },
     /** Default root users */
     rootUser:{
+        _id: new ObjectId("111d45db1000c382457b0111"),
         firstName:"root",
         lastName:"user",
         email:"root@sveltecms.dev",

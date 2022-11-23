@@ -1,16 +1,16 @@
 <script lang="ts">
-    import { IsNavOpen } from "$Stores";
+    import { IS_NAV_OPEN } from "$Stores";
     import Logo from "./Logo.svelte";
     import Links from "./Links.svelte";
     /** Close nav when click outside */
     function closeNav(e:any){
         const clickedDiv:HTMLDivElement = e.target
         if(clickedDiv.classList.contains("mainHeader")){
-            IsNavOpen.set(false)
+            IS_NAV_OPEN.set(false)
         }
     }
 </script>
-<header class="mainHeader" class:open={$IsNavOpen} on:click={closeNav}>
+<header class="mainHeader" class:open={$IS_NAV_OPEN} on:click={closeNav}>
     <nav class="mainNav">
         <Logo/>
         <Links />

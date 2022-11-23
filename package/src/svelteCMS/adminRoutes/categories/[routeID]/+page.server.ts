@@ -1,6 +1,6 @@
 import db from "$Database"
 import svelteCMS from "$svelteCMS"
-import { CategoriesRoutes } from "$Stores"
+import { CATEGORIES_ROUTES } from "$Stores"
 import { getStoreData2 } from "$Utils"
 import type { CategoryData } from "$Types"
 // @ts-ignore
@@ -9,7 +9,7 @@ import { error } from "@sveltejs/kit"
 
 export const load:PageServerLoad = async({params})=>{
     const routeID = params.routeID
-    const categoryExists:string[] = await getStoreData2(CategoriesRoutes)
+    const categoryExists:string[] = await getStoreData2(CATEGORIES_ROUTES)
     // Check if category ID exists
     if(!categoryExists.includes(routeID)) throw error(404,`Categories for route:${routeID} do not exists`)
     // Else if it exists, return categories list

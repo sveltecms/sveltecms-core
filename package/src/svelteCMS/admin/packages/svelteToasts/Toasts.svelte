@@ -13,7 +13,7 @@
 
 <style>
     .toasts{
-        z-index: 100;
+        z-index: 10000;
         position: fixed;
         top: 20px;
         right: 20px;

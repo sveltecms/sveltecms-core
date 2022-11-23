@@ -1,6 +1,6 @@
 import db from "$Database"
 import svelteCMS from "$svelteCMS"
-import { Routes,CategoriesRoutes,TagsRoutes } from "$Stores"
+import { ROUTES,CATEGORIES_ROUTES,TAGS_ROUTES } from "$Stores"
 import { capitalize,getElementType } from "$Utils"
 import { dev as isDevMode } from "$app/environment"
 import { writeFileSync } from "fs"
@@ -23,9 +23,9 @@ export const load:LayoutServerLoad = async()=>{
         if(route.includeTags) tagsRoutes.push(route.ID)
     }
     // Set server stores
-    Routes.set(routes)
-    CategoriesRoutes.set(categoriesRoutes)
-    TagsRoutes.set(tagsRoutes)
+    ROUTES.set(routes)
+    CATEGORIES_ROUTES.set(categoriesRoutes)
+    TAGS_ROUTES.set(tagsRoutes)
     // Auto generate types on dev mode
     if(isDevMode && routes.length>0) makeRoutesTypes(routes)
     // Return objects

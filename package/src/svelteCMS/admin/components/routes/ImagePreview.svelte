@@ -1,11 +1,13 @@
 <script lang="ts">
     export let image:AssetData
+     /** Image maxt with*/
+     export let maxWidth:string = "300px"
     import type { AssetData } from "$Packages/fileUploader/types";
     import { fade } from "svelte/transition";
     $: src = `/admin/api/assets/${image.path}`
 </script>
 
-<div class="imagePreview">
+<div class="imagePreview" style="--maxWidth:{maxWidth}">
     <img {src} alt={image.name} in:fade="{{duration:200}}">
 </div>
 
@@ -14,7 +16,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        max-width: 300px;
+        max-width: var(--maxWidth);
         overflow: hidden;
         border-radius: 5px;
         box-shadow: var(--boxShadow2);
