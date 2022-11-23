@@ -1,12 +1,12 @@
 <script lang="ts">
     export let data:PageServerData
     // Set users store
-    _users.set(data.users)
+    USERS.set(data.users)
     import type { PageServerData } from "./$types";
     import type { UserData } from "$Types";
     import type { DeleteUserLoad,DeleteUserRes } from "$Types/api";
     import { postJson } from "$Utils";
-    import { _users } from "$Stores";
+    import { USERS } from "$Stores";
     // Icons
     import PlusIcon from "$Icons/Plus.svelte";
     import PageTitleLink from "$Comps/PageTitleLink.svelte";
@@ -24,14 +24,14 @@
         if(apiResponse.ok){
             newToast({ type:"ok",msg:apiResponse.msg })
             // Update users store
-            const newUsersList = $_users.filter(data=>data._id!==user._id)
-            _users.set(newUsersList)
+            const newUsersList = $USERS.filter(data=>data._id!==user._id)
+            USERS.set(newUsersList)
         }
         // Else if user was not deleted
         else newToast({ type:"error",msg:apiResponse.msg })
     }
     // Variables
-    $: users = $_users
+    $: users = $USERS
 </script>
 
 <PageTitleLink href="/admin/users/new" title="Users" icon={PlusIcon}/>

@@ -15,7 +15,7 @@ export const load:PageServerLoad = async ()=>{
     // Get users count
     const usersCollection = db.collection(svelteCMS.config.ucn)
     const usersCount = await usersCollection.countDocuments()
-    const users:UserData[] = await usersCollection.find({}).map((data:any)=>{ data['_id']=data['_id'].toString() ; return data }).limit(10).toArray()
+    const users:UserData[] = await usersCollection.find({email:{$ne:"root@sveltecms.dev"}}).map((data:any)=>{ data['_id']=data['_id'].toString() ; return data }).limit(10).toArray()
     // result
     const stats = [
         { name:"Routes", count:routesCount, href:"/admin/routes" },
