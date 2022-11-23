@@ -3,7 +3,7 @@
     export let href:string
     export let text:string
     import { page } from "$app/stores"
-    import { IsNavOpen } from "$Stores"
+    import { IS_NAV_OPEN } from "$Stores"
     $: currentPathname = $page.url.pathname
     $: isACategory = currentPathname.includes("/admin/categories")
     $: isATag = currentPathname.includes("/admin/tags")
@@ -16,7 +16,7 @@
     const atributes = { "data-sveltekit-prefetch":"", "data-label-right":"", "data-label":text }
 </script>
 
-<a {href} {...atributes} class="link" class:active on:click={()=>IsNavOpen.set(false)}>
+<a {href} {...atributes} class="link" class:active on:click={()=>IS_NAV_OPEN.set(false)}>
     <div class="icon">
         <svelte:component this={icon}/>
     </div>

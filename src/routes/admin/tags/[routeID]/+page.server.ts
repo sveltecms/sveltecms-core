@@ -1,6 +1,6 @@
 import db from "$Database"
 import svelteCMS from "$svelteCMS"
-import { TagsRoutes } from "$Stores"
+import { TAGS_ROUTES } from "$Stores"
 import { getStoreData2 } from "$Utils"
 import type { TagData } from "$Types"
 // @ts-ignore
@@ -9,7 +9,7 @@ import { error } from "@sveltejs/kit"
 
 export const load:PageServerLoad = async({params})=>{
     const routeID = params.routeID
-    const tagExists:string[] = await getStoreData2(TagsRoutes)
+    const tagExists:string[] = await getStoreData2(TAGS_ROUTES)
     // Check if tag ID exists
     if(!tagExists.includes(routeID)) throw error(404,`Tags for route:${routeID} do not exists`)
     // Else if it exists, return tags list

@@ -13,10 +13,10 @@
     let addingNewRoute = false
     //--------------------------------------------------
     // Types
-    import type { RouteLoad,ElementData } from "$Types"
-    import type { RouteNewData } from "$Types/api"
+    import type { ElementData } from "$Types"
+    import type { CreateRouteRes } from "$Types/api"
     // Stores
-    import { Routes } from "$Stores"
+    import { ROUTES } from "$Stores"
     // Utils
     import { validateNewRoute,capitalize,getRealValue,postJson,wait } from "$Utils";
     // Icons
@@ -57,14 +57,14 @@
         // Add status by default when addnig new route
         if(addingNewRoute) routeData.elements.unshift({ ID:"status",name:"Status",type:"status",value:"public" })
         // Publish or update routes
-        const apiResponse:RouteNewData = await postJson(apiPath,routeData)
+        const apiResponse:CreateRouteRes = await postJson(apiPath,routeData)
         // If routes was created or updated
         if(apiResponse.ok){
             newToast({type:"ok",msg:apiResponse.msg})
             // Add new routes to Routes store if adding new one
             if(addingNewRoute){
                 // @ts-ignore
-                $Routes = [...$Routes,routeData]
+                $ROUTES = [...$ROUTES,routeData]
             }
             // Wait 2 seconds
             await wait(2000)

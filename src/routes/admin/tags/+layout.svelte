@@ -1,8 +1,8 @@
 <script>
-    import { TagsRoutes } from "$Stores"
+    import { TAGS_ROUTES } from "$Stores"
     import { capitalize } from "$Utils";
     import InPageLinks from "$Comps/shared/inPageLink/Links.svelte"
-    $: links = $TagsRoutes.map(name=>{return{ title:capitalize(name),href:`/admin/tags/${name}`}})
+    $: links = $TAGS_ROUTES.map(name=>{return{ title:capitalize(name),href:`/admin/tags/${name}`}})
 </script>
 
 <div class="page">

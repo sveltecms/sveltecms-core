@@ -1,7 +1,7 @@
 <script lang="ts">
     export let data:LayoutServerData
     import "../../admin/layout.css"
-    import { Routes,CategoriesRoutes,TagsRoutes } from "$Stores"
+    import { ROUTES,CATEGORIES_ROUTES,TAGS_ROUTES } from "$Stores"
     // Types
     import type { LayoutServerData } from "./$types"
     // Packages
@@ -12,9 +12,9 @@
     import TopNav from "$Comps/core/nav/topNav/TopNav.svelte";
     import Footer from "$Comps/core/footer/Footer.svelte";
     // Set stores
-    Routes.set(data.routes)
-    CategoriesRoutes.set(data.categoriesRoutes)
-    TagsRoutes.set(data.tagsRoutes)
+    ROUTES.set(data.routes)
+    CATEGORIES_ROUTES.set(data.categoriesRoutes)
+    TAGS_ROUTES.set(data.tagsRoutes)
 </script>
 
 <Toasts />

@@ -1,5 +1,5 @@
 import db from "$Database"
-import { Routes } from "$Stores"
+import { ROUTES } from "$Stores"
 import { getStoreData } from "$Utils"
 import type { RouteValueData } from "$Types"
 import type { PageServerLoad } from "./$types"
@@ -8,7 +8,7 @@ import { error } from "@sveltejs/kit"
 // Export load function
 export const load:PageServerLoad = async({params}) => {
     const routeID = params.routeID
-    const routeData:RouteValueData = await getStoreData(Routes,routeID)
+    const routeData:RouteValueData = await getStoreData(ROUTES,routeID)
     // Check if route id exists
     if(!routeData) throw error(404,{message:"Route do not exists"})
     // Else route object and return data
