@@ -1,18 +1,25 @@
 <script lang="ts">
     /** Indicate if box is open or close */
     export let open:boolean
+    /** PopUpBox content maxt with*/
+    export let maxWidth:string = "600px"
     import CloseIcon from "$Icons/Close.svelte"
+    import { createEventDispatcher } from "svelte";
     /** Close box */
     function handleBoxClick(e:Event){
         const element = e.target as HTMLDivElement
         const canClose = ( element.classList.contains("closeBtn") || element.classList.contains("popUpBox") )
         if(canClose){ open = false }
+        // Create custom event when box is closed
+        if(open===false) dispatch("close")
     }
+    // Variables
+    const dispatch = createEventDispatcher()
 </script>
 
 {#if open}
 <div class="popUpBox" on:click={handleBoxClick}>
-    <div class="content">
+    <div class="content" style="--maxWidth:{maxWidth}">
         <div class="closeBtn" on:click={handleBoxClick}>
             <CloseIcon />
         </div>
@@ -34,7 +41,7 @@
         justify-content: center;
     }
     .content{
-        max-width: 700px;
+        max-width: var(--maxWidth);
         width: 95%;
         background-color: var(--bodyBg);
         color: var(--textColor);

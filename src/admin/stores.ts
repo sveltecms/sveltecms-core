@@ -16,6 +16,7 @@ export const TagsRoutes:Writable<string[]> = writable([])
 
 /** List of assets */
 export const _assets:Writable<AssetData[]> = writable([])
+export const ASSETS:Writable<AssetData[]> = writable([])
 
 /** List of users */
 export const _users:Writable<UserData[]> = writable([])

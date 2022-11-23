@@ -1,3 +1,4 @@
+import type { AssetData } from "$Packages/fileUploader/types"
 import type { CategoryLoad,CategoryData,TagLoad,TagData, RouteData, RouteLoad, ElementData, RouteObjectData, UserLoad, UserData } from "$Types"
 
 /** Data needed to search categories */
@@ -123,6 +124,21 @@ export type UpdateUserRes = {
 export type DeleteUserLoad = UserLoad
 /** Response from deleting user */
 export type DeleteUserRes = {
+    ok:boolean
+    msg:string
+}
+
+/** Data needed to Update asset */
+export type AssetUpdateLoad = AssetData
+/** Response from updating asset */
+export type AssetUpdateRes = {
+    ok:boolean
+    msg:string
+}
+/** Data needed to delete asset */
+export type AssetDeleteLoad = AssetData
+/** Response from deleting asset */
+export type AssetDeleteRes = {
     ok:boolean
     msg:string
 }
