@@ -1,5 +1,5 @@
 {
-    "alias": "            $svelteCMS:\"src/admin/svelteCMS.ts\",\n            $Utils:\"src/admin/utils.ts\",\n            $Stores:\"src/admin/stores.ts\",\n            $Database:\"src/admin/db.server.ts\",\n            $Types:\"src/admin/types\",\n            $Comps:\"src/admin/components/\",\n            $Elements:\"src/admin/elements/\",\n            $Icons:\"src/admin/icons/\",\n            $Packages:\"src/admin/packages/\"",
+    "alias": "            $svelteCMS:\"src/admin/svelteCMS.ts\",\n            $Cms:\"src/admin/cms\",\n            $Utils:\"src/admin/utils.ts\",\n            $Stores:\"src/admin/stores.ts\",\n            $Database:\"src/admin/db.server.ts\",\n            $Types:\"src/admin/types\",\n            $Comps:\"src/admin/components/\",\n            $Elements:\"src/admin/elements/\",\n            $Icons:\"src/admin/icons/\",\n            $Packages:\"src/admin/packages/\"",
     "devDependencies": {
         "@sveltejs/adapter-auto": "next",
         "@sveltejs/kit": "next",

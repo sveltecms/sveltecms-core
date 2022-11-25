@@ -3,7 +3,7 @@
     ASSETS.set(data.assets)
     import type { PageServerData } from "./$types"
     import type { AssetData } from "$Packages/fileUploader/types";
-    import type { FetchAssetsLoad,FetchAssetRes } from "$Types/cms";
+    import type { FetchAssetsLoad,FetchAssetsRes } from "$Types/cms";
     import svelteCMS from "$svelteCMS";
     import { ASSETS } from "$Stores"
     import { wait,postJson } from "$Utils"
@@ -33,21 +33,23 @@
         pageNumber = pageNumber+1
         // Send api request
         const apiLoad:FetchAssetsLoad = { filter:{},count:svelteCMS.config.assetsPerPage,pageNumber }
-        const apiResponse:FetchAssetRes = await postJson("/assets",apiLoad) 
+        const apiResponse:FetchAssetsRes = await postJson("/assets",apiLoad) 
         if(apiResponse.length>0){
             if(apiResponse.length<svelteCMS.config.assetsPerPage) resetStages()
+            // Wait 500 milliseconds
+            await wait(500)
             // Marge assets with response assets
             ASSETS.set([...$ASSETS,...apiResponse])
         }
         // Reset stages
-        else resetStages()
-        // Wait 500 milliseconds
-        await wait(500)
+        else await resetStages()
         // Remove loading more assets
         isGettingMoreAssets = false
     }
     /** Reset stages */
-    function resetStages(){
+    async function resetStages(){
+        // Wait 500 milliseconds
+        await wait(500)
         showLoadMoreBtn = false
         pageNumber = 1
     }

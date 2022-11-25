@@ -33,11 +33,13 @@ export default {
         /** Base for route categories */
         categoriesCollectionBase:"__categories",
         /** Assets per page */
-        assetsPerPage:2,
+        routeObjectsPerPage:8,
+        /** Assets per page */
+        assetsPerPage:24,
         /** Users per page */
-        usersPerPage:2,
+        usersPerPage:16,
         /** Routes per page */
-        routesPerPage:2,
+        routesPerPage:8,
         /** Path to the admin api base url /admin/api */
         abp:"/admin/api",
         /** Base path url to view assets */

@@ -16,6 +16,9 @@
                         <EyeSlashIcon />
                     {:else if valueType==="object"}
                         <JsonIcon />
+                    {:else if valueType==="string"}
+                        {objectValue.substring(0,70)}
+                        {#if objectValue.length>=70}...{/if}
                     {:else}
                         {objectValue}
                     {/if}
