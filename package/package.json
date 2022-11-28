@@ -5,7 +5,7 @@
     "files": [
         "./src"
     ],
-    "version": "1.0.0-next.1",
+    "version": "1.0.0-next.2",
     "repository": {
         "url": "https://github.com/sveltecms/sveltecms-core"
     },

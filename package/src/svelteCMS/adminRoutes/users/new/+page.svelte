@@ -74,7 +74,7 @@
 </script>
 
 <FileUploader bind:open={isFileUploaderOpen} on:select={handleFileSelected}/>
-<PageTitleLink href="/admin/users/new" title="Users" icon={PlusIcon}/>
+<PageTitleLink href="/admin/users" linkText="All users" title="All users" goBackSrc="/admin/users"/>
 <Content>
     <LeftContent>
         <Label text="First name"/>

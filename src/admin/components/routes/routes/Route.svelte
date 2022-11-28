@@ -10,7 +10,7 @@
     import TrashIcon from "$Icons/Trash.svelte";
     import CloseIcon from "$Icons/Xmark.svelte"
     import PenIcon from "$Icons/VectorPen.svelte"
-    import ViewIcon from "$Icons/Link.svelte"
+    import ViewIcon from "$Icons/Eye.svelte"
     /** Delete route */
     function handleDeleteRoute(){ dispatcher("delete",route) }
     // Variables
@@ -24,11 +24,11 @@
         <RouteIcon />{route.title}
     </span>
     <div class="actions">
-        <a href="/admin/routes/{route.ID}/new-object" class="btn" {...atributes}>
-            <PlusIcon />Add object
-        </a>
         <a href="/admin/routes/{route.ID}" class="icon" data-label="View {route.ID}" {...atributes}>
             <ViewIcon />
+        </a>
+        <a href="/admin/routes/{route.ID}/new-object" class="btn" {...atributes}>
+            <PlusIcon />Add object
         </a>
         <a href="/admin/routes/{route.ID}/edit" class="icon" data-label="Edit {route.ID}" {...atributes}>
             <PenIcon />
@@ -70,7 +70,7 @@
         background-color: var(--buttonBg);
         padding: 5px 10px;
         border-radius: 20px;
-        margin-right: 10px;
+        margin: 0px 10px 0px 20px;
         box-shadow: var(--boxShadow2);
         border: 1px solid transparent;
         transition: border 0.2s ease-in-out;

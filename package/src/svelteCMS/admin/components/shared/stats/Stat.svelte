@@ -9,7 +9,7 @@
 </div>
 
 <style lang="scss">
-    $size: 60px;
+    $size: 50px;
     .stat{
         flex-grow: 1;
         display: flex;
@@ -31,10 +31,11 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 30px;
+        font-size: 20px;
         font-weight: 900;
         background-color: white;
         color: var(--mainColor);
+        padding: 10px;
     }
     .title{
         font-size: 15px;
@@ -46,11 +47,11 @@
         text-decoration: none;
         font-size: 13px;
         font-weight: 400;
-        color: white;
-        background-color: var(--bodyBg);
+        color: var(--buttonColor);
+        background-color: var(--buttonBg);
         box-shadow: var(--boxShadow);
         padding: 8px 14px;
-        border-radius: 5px;
+        border-radius: 20px;
     }
     // mobile
     @media(max-width:1000px){

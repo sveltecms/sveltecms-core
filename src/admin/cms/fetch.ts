@@ -1,16 +1,19 @@
 import svelteCMS from "$svelteCMS"
 import type { Collection, Db } from "mongodb"
 import type { AssetData } from "$Packages/fileUploader/types"
-import type { FetchAssetLoad,FetchAssetsLoad, FetchUserLoad, FetchUsersLoad, FetchRouteLoad, FetchRoutesLoad } from "$Types/cms"
-import type { RouteData, UserData } from "$Types"
+import type {
+    FetchAssetLoad,FetchAssetsLoad, FetchUserLoad, FetchUsersLoad, FetchRouteLoad, FetchRoutesLoad,
+    FetchRouteObjectLoad, FetchRouteObjectRes, FetchRouteObjectsLoad, FetchRouteObjectsRes
+} from "$Types/cms"
+import type { RouteData, RouteObjectData, UserData } from "$Types"
 
 export default class Fetch {
     private routesCollection:Collection
     private assetsCollection:Collection
     private usersCollection:Collection
-
+    private db:Db
     // Fetch constructor
-    constructor(private db:Db){
+    constructor(db:Db){
         this.db = db
         this.routesCollection = db.collection(svelteCMS.config.rcn)
         this.assetsCollection = db.collection(svelteCMS.config.acn)
@@ -25,8 +28,35 @@ export default class Fetch {
     }
     /** Find multiple routes */
     async routes(props:FetchRoutesLoad){
-        const routesDbResult:any = this.routesCollection.find(props.filter).limit(props.count).map((data:any)=>{ data['_id']=data['_id'].toString();return data}).toArray()
-        const routes:Promise<RouteData|null> = routesDbResult
+        const routesCursor = this.routesCollection.find(props.filter).limit(props.count)
+        // Add skip objects
+        if(props.pageNumber){
+            const itemsToSkip = props.pageNumber*svelteCMS.config.routesPerPage - svelteCMS.config.routesPerPage
+            routesCursor.skip(itemsToSkip)
+        }
+        const routesDbResult = routesCursor.map((data:any)=>{ data['_id']=data['_id'].toString();return data}).toArray()
+        const routes:Promise<RouteData[]> = routesDbResult
+        return routes
+    }
+
+    /** Find one route object */
+    async routeObject(routeID:any,props:FetchRouteObjectLoad){
+        const routeObjectsCollection = this.db.collection(routeID)
+        const routeDbResult:any = routeObjectsCollection.findOne(props)
+        const route:Promise<RouteObjectData|null> = routeDbResult
+        return route
+    }
+    /** Find one route object */
+    async routeObjects(props:FetchRouteObjectsLoad){
+        const routeObjectsCollection = this.db.collection(props.routeID)
+        const routeObjectsCursor = routeObjectsCollection.find(props.filter).limit(props.count)
+        // Add skip objects
+        if(props.pageNumber){
+            const itemsToSkip = props.pageNumber*svelteCMS.config.routeObjectsPerPage - svelteCMS.config.routeObjectsPerPage
+            routeObjectsCursor.skip(itemsToSkip)
+        }
+        const routeObjectsDbResult = routeObjectsCursor.map((data:any)=>{ data['_id']=data['_id'].toString();return data}).toArray()
+        const routes:Promise<RouteObjectData[]> = routeObjectsDbResult
         return routes
     }
 

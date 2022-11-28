@@ -68,5 +68,5 @@
 <TitleButton title="All Assets" on:click={()=>isFileUploaderOpen=true} icon={PlusIcon}/>
 <Assets assets={$ASSETS}/>
 {#if showLoadMoreBtn}
-    <Button loading={isGettingMoreAssets} text="Load more" --width="fit-content" on:click={loadMoreAssets}/>
+    <Button loading={isGettingMoreAssets} text="Load more" centerBtn={true} --width="fit-content" on:click={loadMoreAssets}/>
 {/if}

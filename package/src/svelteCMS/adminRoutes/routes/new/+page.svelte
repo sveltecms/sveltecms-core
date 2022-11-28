@@ -19,6 +19,8 @@
     import SaveIcon from "$Icons/Cloud.svelte"
     // Packages
     import { newToast } from "$Packages/svelteToasts";
+    // Components
+    import PageTitleLink from "$Comps/PageTitleLink.svelte";
     // Elements comps
     import Label from "$Elements/Label.svelte";
     import LabelSelector from "$Elements/LabelSelector.svelte";
@@ -96,6 +98,7 @@
     $: elementError = checkError && routeData.elements.length===0
 </script>
 
+<PageTitleLink href="/admin/routes" linkText="All routes" title="Adding route" goBackSrc="/admin/routes"/>
 <Content>
     <LeftContent>
         {#if addingNewRoute}

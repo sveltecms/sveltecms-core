@@ -74,7 +74,7 @@
 {#if $USERS.length > 0}
     <Users users={$USERS} on:delete={handleDeleteUser}/>
     {#if showLoadMoreBtn}
-        <Button loading={loadingMoreUsers} --width="fit-content" on:click={loadMoreUsers}/>
+        <Button loading={loadingMoreUsers} text="Load more" centerBtn={true} --width="fit-content" on:click={loadMoreUsers}/>
     {/if}
 {:else}
     <NoResult title="No users" subTitle="Please add some users" href="/admin/users/new" hrefText="Create user"/>

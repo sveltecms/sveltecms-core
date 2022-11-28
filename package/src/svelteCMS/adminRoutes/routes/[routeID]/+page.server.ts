@@ -1,20 +1,16 @@
-import db from "$Database"
-import { ROUTES } from "$Stores"
-import { getStoreData } from "$Utils"
-import type { RouteValueData } from "$Types"
-import type { PageServerLoad } from "./$types"
+import cms from "$Cms"
+import svelteCMS from "$svelteCMS"
 import { error } from "@sveltejs/kit"
+import type { PageServerLoad } from "./$types"
 
-// Export load function
-export const load:PageServerLoad = async({params}) => {
+export const load:PageServerLoad = async({params})=>{
     const routeID = params.routeID
-    const routeData:RouteValueData = await getStoreData(ROUTES,routeID)
+    const routeDataDB = await cms.Fetch.route({ ID:routeID })
     // Check if route id exists
-    if(!routeData) throw error(404,{message:"Route do not exists"})
-    // Else route object and return data
-    const collection = db.collection(routeID)
-    // @ts-ignore
-    const objectsDB:any = await collection.find({}).limit(20).map(data=>{ data['_id']=data['_id'].toString() ; return data }).toArray()
-    const objects:{[key:string]:any}[] = objectsDB
-    return { routeData,objects }
+    if(!routeDataDB) throw error(404,{message:`Route:${routeID} do not exists`})
+    // Else get route objects
+    const routeObjects = await cms.Fetch.routeObjects({ filter:{},routeID,count:svelteCMS.config.routeObjectsPerPage })
+    // Convert MongoDB ObjectId to string to avoid non-POJOs error from svelte kit
+    routeDataDB['_id'] = routeDataDB['_id'].toString()
+    return { routeObjects,routeData:routeDataDB,routeID }
 }

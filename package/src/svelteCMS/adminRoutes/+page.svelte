@@ -2,6 +2,7 @@
     export let data:PageServerData
     ASSETS.set(data.assets)
     USERS.set(data.users)
+    ROUTES.set(data.routes)
     import type { PageServerData } from "./$types"
     import { ROUTES,USERS,ASSETS } from "$Stores"
     import PageTitle from "$Comps/PageTitle.svelte";

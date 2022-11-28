@@ -47,6 +47,11 @@
         display: flex;
         align-items: center;
     }
+    .name{
+        font-size: 15px;
+        font-weight: 300;
+        color: var(--textColor);
+    }
     .icon:nth-child(1){ margin-right: 10px;}
     .icon{
         flex: 0;

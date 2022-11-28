@@ -5,19 +5,23 @@
     export let loading:boolean = false
     /** Optional you can pass an icon component to display inside button */
     export let icon:undefined|any = undefined
+    /** Center button */
+    export let centerBtn:boolean = false
     // COMPS
     import Spinner from "$Comps/Spinner.svelte";
 </script>
 
-<button on:click class:loading={loading} disabled={loading}>
-    {#if loading}<Spinner />{/if}
-    {#if icon && !loading}
-        <div class="icon">
-            <svelte:component this={icon}/>
-        </div>
-    {/if}
-    {text}
-</button>
+<div class="wrap" class:centerBtn>
+    <button on:click class:loading={loading} disabled={loading}>
+        {#if loading}<Spinner />{/if}
+        {#if icon && !loading}
+            <div class="icon">
+                <svelte:component this={icon}/>
+            </div>
+        {/if}
+        {text}
+    </button>
+</div>
 
 <style lang="scss">
     $width: var(--width,100%);
@@ -42,6 +46,12 @@
         // Hover
         transition: transform ease-in-out 0.2s;
         &:hover{ transform: scale(1.01); }
+    }
+    // When set for center button
+    .centerBtn{
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     .icon{
         display: flex;

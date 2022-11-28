@@ -14,7 +14,7 @@ export const load:LayoutServerLoad = async()=>{
     const tagsRoutes:string[] = []
     // Database queries
     const routesCollection = db.collection(svelteCMS.config.routesCollectionName)
-    const routesCursor:any = routesCollection.find({})
+    const routesCursor:any = routesCollection.find({}).limit(5)
     const routesDB:any = await routesCursor.map((data:any)=>{data['_id']=data['_id'].toString();return data}).toArray()
     const routes:RouteData[] = routesDB
     // Get routes that includes categories and tags

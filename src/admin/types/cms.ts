@@ -1,5 +1,5 @@
 import type { AssetData } from "$Packages/fileUploader/types"
-import type { RouteData, UserData } from "$Types"
+import type { RouteData, RouteObjectData, UserData } from "$Types"
 import type { ObjectId } from "mongodb"
 
 /** Data needed to fetch single route */
@@ -12,8 +12,24 @@ export interface FetchRoutesLoad {
     count:number
     pageNumber?:number
 }
-/** Data returned from fetching route */
+/** Data returned from fetching routes */
 export type FetchRoutesRes = RouteData[]
+
+/** Data needed to fetch single route object */
+export type FetchRouteObjectLoad = { _id:ObjectId } | { [key:string]:any }
+/** Data returned from fetching route object */
+export type FetchRouteObjectRes = RouteObjectData|null
+/** Data needed to fetch route objects */
+export interface FetchRouteObjectsLoad {
+    filter:{ _id:ObjectId } | { [key:string]:any }
+    /** Route ID example posts */
+    routeID:any
+    count:number
+    pageNumber?:number
+}
+/** Data returned from fetching route objects */
+export type FetchRouteObjectsRes = RouteObjectData[]
+
 
 /** Data needed to fetch single asset */
 export type FetchAssetLoad = { _id:ObjectId } | { name:any } | {}

@@ -3,9 +3,18 @@
     export let href:string
     export let linkText:string = "ADD"
     export let icon:any = null
+    /** Show go back link */
+    export let goBackSrc:string|undefined = undefined
+    // Icons
+    import GoBackIcon from "$Icons/ArrowLeftShort.svelte"
 </script>
 
 <div class="title">
+    {#if goBackSrc}
+        <a href={goBackSrc} data-sveltekit-prefetch data-label="Go back" data-label-right class="goBack">
+            <GoBackIcon />
+        </a>
+    {/if}
     <h2>{title}</h2>
     <a {href} class="link" data-sveltekit-prefetch>
         {linkText}
@@ -25,7 +34,23 @@
         text-shadow: 2px 2px 0px #5b5b5b;
         margin-bottom: 10px;
     }
-    h2{ font-weight: 600; }
+    .goBack{
+        flex: 0;
+        margin-right: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+        background-color: var(--buttonBg);
+        fill: var(--buttonColor);
+        padding: 5px;
+        border-radius: 50%;
+        box-shadow: var(--boxShadow2);
+    }
+    h2{
+        flex: 1;
+        font-weight: 600;
+    }
     .icon{
         display: flex;
         align-items: center;
