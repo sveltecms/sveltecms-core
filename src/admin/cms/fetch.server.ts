@@ -3,9 +3,9 @@ import type { Collection, Db } from "mongodb"
 import type { AssetData } from "$Packages/fileUploader/types"
 import type {
     FetchAssetLoad,FetchAssetsLoad, FetchUserLoad, FetchUsersLoad, FetchRouteLoad, FetchRoutesLoad,
-    FetchRouteObjectLoad, FetchRouteObjectRes, FetchRouteObjectsLoad, FetchRouteObjectsRes
+    FetchRouteObjectLoad, FetchRouteObjectsLoad, FetchRouteObjectsRes,FetchCategoryLoad,FetchCategoriesLoad, FetchTagLoad, FetchTagsLoad
 } from "$Types/cms"
-import type { RouteData, RouteObjectData, UserData } from "$Types"
+import type { CategoryData, RouteData, RouteObjectData, TagData, UserData } from "$Types"
 
 export default class Fetch {
     private routesCollection:Collection
@@ -56,7 +56,7 @@ export default class Fetch {
             routeObjectsCursor.skip(itemsToSkip)
         }
         const routeObjectsDbResult = routeObjectsCursor.map((data:any)=>{ data['_id']=data['_id'].toString();return data}).toArray()
-        const routes:Promise<RouteObjectData[]> = routeObjectsDbResult
+        const routes:Promise<FetchRouteObjectsRes[]> = routeObjectsDbResult
         return routes
     }
 
@@ -98,5 +98,47 @@ export default class Fetch {
         const usersDbResult:any = usersCursor.map((data:any)=>{ data['_id']=data['_id'].toString();return data}).toArray()
         const users:Promise<UserData[]> = usersDbResult
         return users
+    }
+
+    /** Find one category */
+    async category(props:FetchCategoryLoad){
+        const filter = {...props}
+        delete filter['routeID']
+        const categoryDbResult:any = this.db.collection(`__categories_${props.routeID}`).findOne(filter)
+        const category:Promise<CategoryData|null> = categoryDbResult
+        return category
+    }
+    /** Find multiple categories */
+    async categories(props:FetchCategoriesLoad){
+        const categoriesCursor = this.db.collection(`__categories_${props.routeID}`).find(props.filter).limit(props.count)
+        // Add skip objects
+        if(props.pageNumber){
+            const itemsToSkip = props.pageNumber*svelteCMS.config.categoriesPerPage - svelteCMS.config.categoriesPerPage
+            categoriesCursor.skip(itemsToSkip)
+        }
+        const categoriesDbResult:any = categoriesCursor.map((data:any)=>{ data['_id']=data['_id'].toString();return data}).toArray()
+        const categories:Promise<CategoryData[]> = categoriesDbResult
+        return categories
+    }
+
+    /** Find one tag */
+    async tag(props:FetchTagLoad){
+        const filter = {...props}
+        delete filter['routeID']
+        const tagDbResult:any = this.db.collection(`__tags_${props.routeID}`).findOne(filter)
+        const tag:Promise<TagData|null> = tagDbResult
+        return tag
+    }
+    /** Find multiple tags */
+    async tags(props:FetchTagsLoad){
+        const tagsCursor = this.db.collection(`__tags_${props.routeID}`).find(props.filter).limit(props.count)
+        // Add skip objects
+        if(props.pageNumber){
+            const itemsToSkip = props.pageNumber*svelteCMS.config.tagsPerPage - svelteCMS.config.tagsPerPage
+            tagsCursor.skip(itemsToSkip)
+        }
+        const tagsDbResult:any = tagsCursor.map((data:any)=>{ data['_id']=data['_id'].toString();return data}).toArray()
+        const tags:Promise<TagData[]> = tagsDbResult
+        return tags
     }
 }

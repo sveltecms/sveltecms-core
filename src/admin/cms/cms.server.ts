@@ -1,5 +1,5 @@
 import db from "$Database"
-import Fetch from "./fetch.js"
+import Fetch from "./fetch.server"
 
 export default new class {
     /** Fetch database */

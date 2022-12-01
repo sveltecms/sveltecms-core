@@ -1,21 +1,14 @@
-import db from "$Database"
+import cms from "$Cms"
 import svelteCMS from "$svelteCMS"
-import { TAGS_ROUTES } from "$Stores"
-import { getStoreData2 } from "$Utils"
-import type { TagData } from "$Types"
-// @ts-ignore
-import type { PageServerLoad } from "./$Types"
+import type { PageServerLoad } from "./$types"
 import { error } from "@sveltejs/kit"
 
 export const load:PageServerLoad = async({params})=>{
     const routeID = params.routeID
-    const tagExists:string[] = await getStoreData2(TAGS_ROUTES)
+    const tagData = await cms.Fetch.route({ID:routeID})
     // Check if tag ID exists
-    if(!tagExists.includes(routeID)) throw error(404,`Tags for route:${routeID} do not exists`)
-    // Else if it exists, return tags list
-    const collection = db.collection(`${svelteCMS.config.tagsCollectionBase}_${routeID}`)
-    // @ts-ignore
-    const tagsDB:any = await collection.find({}).limit(20).map(data=>{data['_id']=data['_id'].toString();return data}).toArray()
-    const tags:TagData[] = tagsDB
+    if(!tagData) throw error(404,`Tags for route:${routeID} do not exists`)
+    // Else return tags list
+    const tags = await cms.Fetch.tags({routeID,count:svelteCMS.config.tagsPerPage,filter:{}})
     return { tags,routeID }
 }

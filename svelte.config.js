@@ -10,7 +10,7 @@ const config = {
         alias:{
             //<svelteCMSAlias>
             $svelteCMS:"src/admin/svelteCMS.ts",
-            $Cms:"src/admin/cms",
+            $Cms:"src/admin/cms/cms.server.ts",
             $Utils:"src/admin/utils.ts",
             $Stores:"src/admin/stores.ts",
             $Database:"src/admin/db/mongo.server.ts",

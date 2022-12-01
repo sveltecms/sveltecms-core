@@ -53,7 +53,7 @@
         showLoadMoreBtn = false
         pageNumber = 1
     }
-    // Variables
+    // Variables 
     const assetsApiBasePath = `${svelteCMS.config.apiBasePath}/assets`
     /** Indicate if file uploader is open or not */
     let isFileUploaderOpen:boolean = false
