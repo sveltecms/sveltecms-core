@@ -1,0 +1,26 @@
+{
+    "type": "module",
+    "bin": "./src/main.js",
+    "name": "sveltecms-test",
+    "files": [
+        "./src"
+    ],
+    "version": "0.0.12",
+    "repository": {
+        "url": "https://github.com/sveltecms/sveltecms-core"
+    },
+    "description": "Add svelteCMS to your svelte kit project.",
+    "main": "./src/main.js",
+    "keywords": [
+        "svelte",
+        "sveltekit",
+        "cms"
+    ],
+    "author": "DevelopedByAnt",
+    "license": "ISC",
+    "dependencies": {
+        "bcrypt": "^5.1.0",
+        "inquirer": "^9.1.4",
+        "mongodb": "^4.12.0"
+    }
+}

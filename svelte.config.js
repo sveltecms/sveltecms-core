@@ -13,7 +13,7 @@ const config = {
             $Cms:"src/admin/cms",
             $Utils:"src/admin/utils.ts",
             $Stores:"src/admin/stores.ts",
-            $Database:"src/admin/db.server.ts",
+            $Database:"src/admin/db/mongo.server.ts",
             $Types:"src/admin/types",
             $Comps:"src/admin/components/",
             $Elements:"src/admin/elements/",

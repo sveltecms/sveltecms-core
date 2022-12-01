@@ -39,6 +39,7 @@
         display: flex;
         flex-direction: column;
         width: calc(100% - 140px);
+        min-height: 100vh;
     }
     .mainContent{
         padding: 10px;

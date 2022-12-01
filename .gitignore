@@ -1,8 +1,11 @@
+.copy-*
+.svelteCMS
 assets/images/*.png
 assets/images/*.webp
 assets/images/*.jpg
 assets/images/*.jpeg
 assets/videos/*.mp4
+assets/videos/*.webm
 assets/audios/*.mp3
 .DS_Store
 node_modules
