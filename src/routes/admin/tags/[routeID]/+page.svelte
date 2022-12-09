@@ -10,6 +10,7 @@
     import PageTitleLink from "$Comps/PageTitleLink.svelte";
     import Tags from "$Comps/tags/Tags.svelte"
     import Button from "$Comps/Button.svelte";
+    import NoResult from "$Comps/NoResult.svelte"
     /** Handle tag delete */
     async function handleTagDelete(e:any) {
         const tag:TagData = e.detail
@@ -60,8 +61,12 @@
     let isGettingMoreTags = false
 </script>
 
-<PageTitleLink {title} icon={PlusIcon} href={newTagLink} />
-<Tags {tags} on:delete={handleTagDelete}/>
-{#if showLoadMoreBtn}
-    <Button loading={isGettingMoreTags} text="Load more" centerBtn={true} --width="fit-content" on:click={loadMore}/>
+{#if tags.length > 0}
+    <PageTitleLink {title} icon={PlusIcon} href={newTagLink} />
+    <Tags {tags} on:delete={handleTagDelete}/>
+    {#if showLoadMoreBtn}
+        <Button loading={isGettingMoreTags} text="Load more" centerBtn={true} --width="fit-content" on:click={loadMore}/>
+    {/if}
+{:else}
+    <NoResult title={`No ${routeID}'s tags`} subTitle="Please add tags" href={`/admin/tags/${routeID}/new-tag`} hrefText="Add tag"/>
 {/if}

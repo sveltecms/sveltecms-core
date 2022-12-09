@@ -36,6 +36,7 @@
     import SearchTags from "$Elements/searchTags/Search.svelte"
     // Comps
     import Meta from "$Comps/Meta.svelte"
+    import PageTitleLink from "$Comps/PageTitleLink.svelte";
     // Route components
     import Content from "$Comps/routes/Content.svelte";
     import LeftContent from "$Comps/routes/LeftContent.svelte";
@@ -132,6 +133,7 @@
 
 <Meta {...routeData.meta}/>
 <FileUploader on:select={handleFileSelected} bind:open={fileUploaderOpen}/>
+<PageTitleLink href={`/admin/routes/${routeData.ID}`} linkText="View objects" goBackSrc={`/admin/routes/${routeData.ID}`} title="Editing"/>
 <Content>
     <LeftContent>
         {#each routeData.elements as element}

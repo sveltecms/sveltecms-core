@@ -13,3 +13,6 @@ export const ASSETS:Writable<AssetData[]> = writable([])
 
 /** List of users */
 export const USERS:Writable<UserData[]> = writable([])
+
+/** Previously url (go back path) */
+export const PREV_PATH:Writable<string> = writable("/admin")

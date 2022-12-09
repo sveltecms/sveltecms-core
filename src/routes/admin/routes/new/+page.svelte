@@ -11,7 +11,7 @@
     // Types
     import type { RouteLoad,ElementData } from "$Types"
     import type { CreateRouteRes } from "$Types/api"
-    // Stores
+    // Other
     import { ROUTES } from "$Stores"
     // Utils
     import { validateNewRoute,capitalize,getRealValue,postJson,wait } from "$Utils";

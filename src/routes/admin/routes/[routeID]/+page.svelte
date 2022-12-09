@@ -9,10 +9,12 @@
     // Packages
     import { newToast } from "$Packages/svelteToasts";
     import Meta from "$Comps/Meta.svelte"
+    // Comps
     import PageTitleLink from "$Comps/PageTitleLink.svelte"
     import Objects from "$Comps/routes/objects/Objects.svelte"
     import Button from "$Comps/Button.svelte"
-    /** Handle route onject deletion */
+    import NoResult from "$Comps/NoResult.svelte"
+    /** Handle route's object deletion */
     async function handleObjectDeletion(e:any) {
         const object:RouteObjectData = e.detail
         const apiLoadData:DeleteRouteObjectLoad = object
@@ -68,7 +70,11 @@
 
 <Meta {...routeData.meta} />
 <PageTitleLink title={capitalize(routeData.title)} href="/admin/routes/{routeData.ID}/new-object" linkText="Add object" goBackSrc="/admin/routes"/>
-<Objects objects={routeObjects} on:delete={handleObjectDeletion}/>
-{#if showLoadMoreBtn}
-    <Button loading={loadMoreBtnLoading} text="Load more" centerBtn={true} --width="fit-content" on:click={loadMoreRouteObjects}/>
+{#if routeObjects.length > 0}
+    <Objects objects={routeObjects} on:delete={handleObjectDeletion}/>
+    {#if showLoadMoreBtn}
+        <Button loading={loadMoreBtnLoading} text="Load more" centerBtn={true} --width="fit-content" on:click={loadMoreRouteObjects}/>
+    {/if}
+{:else}
+    <NoResult title="No objects founded" subTitle="Please add some objects" href={`/admin/routes/${routeID}/new-object`} hrefText="Add object"/>
 {/if}

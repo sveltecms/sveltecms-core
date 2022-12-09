@@ -10,6 +10,7 @@
     import PageTitleLink from "$Comps/PageTitleLink.svelte";
     import Categories from "$Comps/categories/Categories.svelte"
     import Button from "$Comps/Button.svelte";
+    import NoResult from "$Comps/NoResult.svelte"
     /** Handle category delete */
     async function handleCategoryDelete(e:any) {
         const category:CategoryData = e.detail
@@ -54,15 +55,19 @@
     $: categories = data.categories
     $: routeID = data.routeID
     $: title = `${capitalize(routeID)}'s categories`
-    $: newCategotyLink = `/admin/categories/${routeID}/new-category`
+    $: newCategoryLink = `/admin/categories/${routeID}/new-category`
     $: showLoadMoreBtn = data.categories.length >= svelteCMS.config.categoriesPerPage
     let pageNumber = 1
     /** Indicate when loading more categories */
     let isGettingMoreCategories = false
 </script>
 
-<PageTitleLink {title} icon={PlusIcon} href={newCategotyLink}/>
-<Categories {categories} on:delete={handleCategoryDelete}/>
-{#if showLoadMoreBtn}
-    <Button loading={isGettingMoreCategories} text="Load more" centerBtn={true} --width="fit-content" on:click={loadMore}/>
+{#if categories.length > 0}
+    <PageTitleLink {title} icon={PlusIcon} href={newCategoryLink}/>
+    <Categories {categories} on:delete={handleCategoryDelete}/>
+    {#if showLoadMoreBtn}
+        <Button loading={isGettingMoreCategories} text="Load more" centerBtn={true} --width="fit-content" on:click={loadMore}/>
+    {/if}
+{:else}
+    <NoResult title={`No ${routeID}'s categories`} subTitle="Please add categories" href={`/admin/categories/${routeID}/new-category`} hrefText="Add category"/>
 {/if}

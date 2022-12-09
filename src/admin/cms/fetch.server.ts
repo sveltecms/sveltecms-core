@@ -60,7 +60,7 @@ export default class Fetch {
             routeObjectsCursor.skip(itemsToSkip)
         }
         const routeObjectsDbResult = routeObjectsCursor.map((data:any)=>{ data['_id']=data['_id'].toString();return data}).toArray()
-        const routes:Promise<FetchRouteObjectsRes[]> = routeObjectsDbResult
+        const routes:Promise<FetchRouteObjectsRes> = routeObjectsDbResult
         return routes
     }
     /** Count documents in routeObjects collection */

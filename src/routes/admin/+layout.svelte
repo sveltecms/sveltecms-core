@@ -1,9 +1,11 @@
 <script lang="ts">
     export let data:LayoutServerData
     import "../../admin/layout.css"
-    import { ROUTES } from "$Stores"
     // Types
     import type { LayoutServerData } from "./$types"
+    // Other
+    import { beforeNavigate } from "$app/navigation";
+    import { PREV_PATH, ROUTES } from "$Stores"
     // Packages
     import Toasts from "$Packages/svelteToasts/Toasts.svelte";
     // Components
@@ -13,6 +15,8 @@
     import Footer from "$Comps/core/footer/Footer.svelte";
     // Set stores
     ROUTES.set(data.routes)
+    // Update previously path
+    beforeNavigate(()=>PREV_PATH.set(location.pathname))
 </script>
 
 {#if true}
