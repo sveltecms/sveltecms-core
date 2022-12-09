@@ -7,6 +7,12 @@ import { type RequestHandler, json } from "@sveltejs/kit"
 export const POST:RequestHandler = async({request})=>{   
     const jsonData:CreateRouteLoad = await request.json();
     const routesCollection = db.collection(svelteCMS.collections.routes)
+    /** Check if route ID start with __, if yes return error */
+    const routeIDError = jsonData.ID.startsWith("__")
+    if(routeIDError){
+        const response:CreateRouteRes = { ok:false,msg:`Route ID:${jsonData.ID} can not start with __` }
+        return json(response)
+    }
     /** Check if route ID exists, if yes return error */
     const routeDataDB = await routesCollection.findOne({ID:jsonData.ID})
     if(routeDataDB){
