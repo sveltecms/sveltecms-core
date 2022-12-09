@@ -9,7 +9,7 @@ import { ObjectId } from "mongodb"
 export const POST:RequestHandler = async({params,request}) => {
     const { routeID } = params
     const jsonData:UpdateRouteObjectLoad = await request.json()
-    const routesCollection = db.collection(`${svelteCMS.config.rcn}`)
+    const routesCollection = db.collection(`${svelteCMS.collections.routes}`)
     /** Check route id exists */
     const routeIDExists = await routesCollection.findOne({ ID:routeID })
     if(!routeIDExists){

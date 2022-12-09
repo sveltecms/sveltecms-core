@@ -6,7 +6,7 @@ import type { DeleteUserLoad,DeleteUserRes } from "$Types/api"
 
 export const POST:RequestHandler = async({request}) => {
     const jsonData:DeleteUserLoad = await request.json()
-    const usersCollection = db.collection(`${svelteCMS.config.ucn}`)
+    const usersCollection = db.collection(`${svelteCMS.collections.users}`)
     /** Check if user exists */
     const userDataDB = await usersCollection.findOne({ email:jsonData.email })
     // If user do not exists, return error

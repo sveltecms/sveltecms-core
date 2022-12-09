@@ -8,7 +8,7 @@ import type { LinkedTagData, TagLoad } from "$Types"
 export const POST:RequestHandler = async({params,request}) => {
     const { routeID } = params
     const jsonData:DeleteTagLoad = await request.json()
-    const routesCollection = db.collection(`${svelteCMS.config.rcn}`)
+    const routesCollection = db.collection(`${svelteCMS.collections.routes}`)
     /** Check route id exists */
     const routeIDExists = await routesCollection.findOne({ ID:routeID })
     if(!routeIDExists){
@@ -16,7 +16,7 @@ export const POST:RequestHandler = async({params,request}) => {
         return json(response)
     }
     // Check if tag exists
-    const tagsCollection = db.collection(`${svelteCMS.config.tcb}_${routeID}`)
+    const tagsCollection = db.collection(`${svelteCMS.collections.baseTags}_${routeID}`)
     const tagDB = await tagsCollection.findOne({ slug:jsonData.slug })
     // If tag do not exists return error
     if(!tagDB){

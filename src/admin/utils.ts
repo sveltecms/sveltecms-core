@@ -103,13 +103,13 @@ export function wait(time:number){
 
 /** Send post request with json body, it uses Config.apiBasePath */
 export async function post(apiPath:string,body:any) {
-    const request = await fetch(svelteCMS.config.apiBasePath+apiPath,{ method:"POST",body:body })
+    const request = await fetch(svelteCMS.urlBases.api+apiPath,{ method:"POST",body:body })
     return request.json() 
 }
 
 /** Send post request with json body, it uses Config.apiBasePath */
 export async function postJson(apiPath:string,body:Object) {
-    const request = await fetch(svelteCMS.config.apiBasePath+apiPath,{
+    const request = await fetch(svelteCMS.urlBases.api+apiPath,{
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(body)
@@ -119,7 +119,7 @@ export async function postJson(apiPath:string,body:Object) {
 
 /** Send post request with json body using svelte fetch, it uses Config.apiBasePath */
 export async function sveltePostJson(fetch:any,apiPath:string,body:Object) {
-    const request = await fetch(svelteCMS.config.apiBasePath+apiPath,{
+    const request = await fetch(svelteCMS.urlBases.api+apiPath,{
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(body)

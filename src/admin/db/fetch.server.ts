@@ -15,9 +15,9 @@ export default class Fetch {
     // Fetch constructor
     constructor(db:Db){
         this.db = db
-        this.routesCollection = db.collection(svelteCMS.config.rcn)
-        this.assetsCollection = db.collection(svelteCMS.config.acn)
-        this.usersCollection = db.collection(svelteCMS.config.ucn)
+        this.routesCollection = db.collection(svelteCMS.collections.routes)
+        this.assetsCollection = db.collection(svelteCMS.collections.assets)
+        this.usersCollection = db.collection(svelteCMS.collections.users)
     }
 
     /** Find one route */

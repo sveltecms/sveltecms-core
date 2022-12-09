@@ -5,7 +5,7 @@ import type { AssetData,SearchLoad } from "$Packages/fileUploader/types"
 
 export const POST:RequestHandler = async({request})=>{   
     const jsonData:SearchLoad = await request.json();
-    const assetsCollection = db.collection(svelteCMS.config.acn)
+    const assetsCollection = db.collection(svelteCMS.collections.assets)
     const dbResult:any = await assetsCollection.find({name:{$regex:new RegExp(jsonData.assetName,"i")}}).limit(4).toArray()
     const assets:AssetData[] = dbResult
     return json(assets)

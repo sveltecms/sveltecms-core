@@ -6,7 +6,7 @@ import { type RequestHandler, json } from "@sveltejs/kit"
 
 export const POST:RequestHandler = async({request})=>{   
     const jsonData:CreateRouteLoad = await request.json();
-    const routesCollection = db.collection(svelteCMS.config.routesCollectionName)
+    const routesCollection = db.collection(svelteCMS.collections.routes)
     /** Check if route ID exists, if yes return error */
     const routeDataDB = await routesCollection.findOne({ID:jsonData.ID})
     if(routeDataDB){

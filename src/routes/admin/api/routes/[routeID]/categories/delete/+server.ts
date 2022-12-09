@@ -8,7 +8,7 @@ import type { CategoryLoad, LinkedCategoryData } from "$Types"
 export const POST:RequestHandler = async({params,request}) => {
     const { routeID } = params
     const jsonData:DeleteCategoryLoad = await request.json()
-    const routesCollection = db.collection(`${svelteCMS.config.rcn}`)
+    const routesCollection = db.collection(`${svelteCMS.collections.routes}`)
     /** Check route id exists */
     const routeIDExists = await routesCollection.findOne({ ID:routeID })
     if(!routeIDExists){
@@ -16,7 +16,7 @@ export const POST:RequestHandler = async({params,request}) => {
         return json(response)
     }
     // Check if category exists
-    const categoriesCollection = db.collection(`${svelteCMS.config.ccb}_${routeID}`)
+    const categoriesCollection = db.collection(`${svelteCMS.collections.baseCategories}_${routeID}`)
     const categoryDB = await categoriesCollection.findOne({ slug:jsonData.slug })
     // If category do not exists return error
     if(!categoryDB){

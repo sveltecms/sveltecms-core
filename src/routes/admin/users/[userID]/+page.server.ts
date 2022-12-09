@@ -6,7 +6,7 @@ import { ObjectId } from "mongodb"
 import type { PageServerLoad } from "./$types"
 
 export const load:PageServerLoad = async({params})=>{
-    const usersCollection = db.collection(svelteCMS.config.ucn)
+    const usersCollection = db.collection(svelteCMS.collections.users)
     const userID = params.userID
     // Check if user exists
     const userDB:any = await usersCollection.findOne({ _id:new ObjectId(userID) })

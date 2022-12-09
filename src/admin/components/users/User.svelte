@@ -3,7 +3,7 @@
     import type { UserData } from "$Types"
     import svelteCMS from "$svelteCMS";
     import ActionsButtons from "./ActionsButtons.svelte";
-    $: imageSrc = `${svelteCMS.config.viewAssetsPath}/images/${user.image.path}`
+    $: imageSrc = `${svelteCMS.urlBases.assets}/images/${user.image.path}`
 </script>
 
 <div class="user">

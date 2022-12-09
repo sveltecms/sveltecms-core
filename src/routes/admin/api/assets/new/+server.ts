@@ -17,7 +17,7 @@ export const POST:RequestHandler = async({request})=>{
     let response:ApiResponse
     try{
         writeFileSync(fileDiskPath,fileBuffer)
-        const assetsCollection = db.collection(svelteCMS.config.acn)
+        const assetsCollection = db.collection(svelteCMS.collections.assets)
         const newAsset:AssetLoad = {
             name: assetName!,
             path: filePath,

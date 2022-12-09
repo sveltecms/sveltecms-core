@@ -11,7 +11,7 @@ export const POST:RequestHandler = async({request})=>{
     /** Api load data */
     const jsonData:AssetUpdateLoad = await request.json()
     const assetDbFilter = { _id: new ObjectId(jsonData._id)}
-    const assetsCollection = db.collection(svelteCMS.config.acn)
+    const assetsCollection = db.collection(svelteCMS.collections.assets)
     const assetExists = await assetsCollection.findOne(assetDbFilter)
     // If asset do not exists
     if(!assetExists){

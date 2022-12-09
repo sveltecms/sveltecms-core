@@ -7,7 +7,7 @@ import { error } from "@sveltejs/kit"
 // Export load function
 export const load:PageServerLoad = async({params}) => {
     const routeID = params.routeID
-    const routesCollection = db.collection(svelteCMS.config.rcn)
+    const routesCollection = db.collection(svelteCMS.collections.routes)
     // Check if route exists
     const routeDataDB:any = await routesCollection.findOne({ ID:routeID })
     if(!routeDataDB){

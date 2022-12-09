@@ -3,7 +3,7 @@
     import type { CategoryData } from "$Types"
     import svelteCMS from "$svelteCMS";
     import ActionsButtons from "./ActionsButtons.svelte";
-    $: src = `${svelteCMS.config.viewAssetsPath}/images/${category.image.path}`
+    $: src = `${svelteCMS.urlBases.assets}/images/${category.image.path}`
     $: alt = category.name
 </script>
 

@@ -8,7 +8,7 @@ import type { RouteData } from "$Types"
 export const POST:RequestHandler = async({params,request}) => {
     const {routeID} = params
     const jsonData:DeleteRouteLoad = await request.json()
-    const routesCollection = db.collection(`${svelteCMS.config.rcn}`)
+    const routesCollection = db.collection(`${svelteCMS.collections.routes}`)
     /** List of collection from database */
     const routeCollectionsArray =  await db.listCollections().toArray()
     /** Check route id exists */
@@ -26,12 +26,12 @@ export const POST:RequestHandler = async({params,request}) => {
         db.collection(routeID).drop()
     }
     // Drop this route categories collection
-    if(routeCollectionsArray.find(data=>data.name===`${svelteCMS.config.ccb}_${routeID}`)){
-        db.collection(`${svelteCMS.config.ccb}_${routeID}`).drop()
+    if(routeCollectionsArray.find(data=>data.name===`${svelteCMS.collections.baseCategories}_${routeID}`)){
+        db.collection(`${svelteCMS.collections.baseCategories}_${routeID}`).drop()
     }
     // Drop this route tags collection
-    if(routeCollectionsArray.find(data=>data.name===`${svelteCMS.config.tcb}_${routeID}`)){
-        db.collection(`${svelteCMS.config.tcb}_${routeID}`).drop()
+    if(routeCollectionsArray.find(data=>data.name===`${svelteCMS.collections.baseTags}_${routeID}`)){
+        db.collection(`${svelteCMS.collections.baseTags}_${routeID}`).drop()
     }
     // Handle route deleted
     handleRouteDeleted(jsonData)

@@ -8,7 +8,7 @@ import type { UserLoad } from "$Types"
 
 export const POST:RequestHandler = async({request}) => {
     const jsonData:CreateUserLoad = await request.json()
-    const usersCollection = db.collection(`${svelteCMS.config.ucn}`)
+    const usersCollection = db.collection(`${svelteCMS.collections.users}`)
     /** Check if user with this email exists */
     const userDataDB = await usersCollection.findOne({ email:jsonData.email })
     if(userDataDB){

@@ -55,7 +55,7 @@
         pageNumber = 1
     }
     // Variables 
-    const assetsApiBasePath = `${svelteCMS.config.apiBasePath}/assets`
+    const assetsApiBasePath = `${svelteCMS.urlBases.api}/assets`
     /** Indicate if file uploader is open or not */
     let isFileUploaderOpen:boolean = false
     let assets = data.assets

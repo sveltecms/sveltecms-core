@@ -8,7 +8,7 @@ import type { CreateCategoryLoad,CreateCategoryRes } from "$Types/api"
 export const POST:RequestHandler = async({params,request}) => {
     const {routeID} = params
     const jsonData:CreateCategoryLoad = await request.json()
-    const routesCollection = db.collection(`${svelteCMS.config.rcn}`)
+    const routesCollection = db.collection(`${svelteCMS.collections.routes}`)
     /** Check route id exists */
     const routeIDExists = await routesCollection.findOne({ ID:routeID })
     if(!routeIDExists){
@@ -16,7 +16,7 @@ export const POST:RequestHandler = async({params,request}) => {
         return json(response)
     }
     // Check if category exists
-    const categoriesCollection = db.collection(`${svelteCMS.config.ccb}_${routeID}`)
+    const categoriesCollection = db.collection(`${svelteCMS.collections.baseCategories}_${routeID}`)
     const categoryDB = await categoriesCollection.findOne({ slug:jsonData.slug })
     // If category exists return error
     if(categoryDB){
@@ -27,7 +27,7 @@ export const POST:RequestHandler = async({params,request}) => {
     const insertedCategoryDB = await categoriesCollection.insertOne(jsonData)
     // If category was inserted
     if(insertedCategoryDB){
-        handleAssetLinked(`${svelteCMS.config.ccb}_${routeID}`,jsonData)
+        handleAssetLinked(`${svelteCMS.collections.baseCategories}_${routeID}`,jsonData)
         handleCategoryDeleted(jsonData)
         // Return response
         const response:CreateCategoryRes = { ok:true,msg:`Category:${jsonData.name} was created`,category:{...jsonData,_id:insertedCategoryDB.insertedId} }
