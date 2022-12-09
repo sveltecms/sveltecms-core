@@ -1,7 +1,7 @@
 <script lang="ts">
     /** Api base url - default "/admin/api/assets" */
     export let apiBaseUrl:string = "/admin/api/assets"
-    /** Wheather file uploader is open or close */
+    /** Whether file uploader is open or close */
     export let open:boolean
     import CloseIcon from "./icons/Close.svelte"
     import Search from "./_search.svelte";

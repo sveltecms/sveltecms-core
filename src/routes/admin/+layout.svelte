@@ -1,7 +1,7 @@
 <script lang="ts">
     export let data:LayoutServerData
     import "../../admin/layout.css"
-    import { ROUTES,CATEGORIES_ROUTES,TAGS_ROUTES } from "$Stores"
+    import { ROUTES } from "$Stores"
     // Types
     import type { LayoutServerData } from "./$types"
     // Packages
@@ -13,22 +13,24 @@
     import Footer from "$Comps/core/footer/Footer.svelte";
     // Set stores
     ROUTES.set(data.routes)
-    CATEGORIES_ROUTES.set(data.categoriesRoutes)
-    TAGS_ROUTES.set(data.tagsRoutes)
 </script>
 
-<Toasts />
-<Meta />
-<div class="app">
-    <MainNav />
-    <div class="content">
-        <TopNav />
-        <main class="mainContent">
-            <slot />
-            <Footer />
-        </main>
+{#if true}
+    <Toasts />
+    <Meta />
+    <div class="app">
+        <MainNav />
+        <div class="content">
+            <TopNav />
+            <main class="mainContent">
+                <slot />
+                <Footer />
+            </main>
+        </div>
     </div>
-</div>
+{:else}
+    <h2>HELLO</h2>
+{/if}
 
 <style>
     .app{

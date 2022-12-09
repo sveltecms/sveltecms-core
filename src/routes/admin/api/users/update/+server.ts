@@ -1,13 +1,12 @@
 import db from "$Database"
 import svelteCMS from "$svelteCMS"
 import { json } from "@sveltejs/kit"
-// @ts-ignore
-import type { RequestHandler } from "./$Types"
+import type { RequestHandler } from "./$types"
 import type { UpdateUserLoad,UpdateUserRes } from "$Types/api"
 
 export const POST:RequestHandler = async({request}) => {
     const jsonData:UpdateUserLoad = await request.json()
-    const usersCollection = db.collection(`${svelteCMS.config.ucn}`)
+    const usersCollection = db.collection(`${svelteCMS.collections.users}`)
     /** Check if user exists */
     const userDataDB = await usersCollection.findOne({ email:jsonData.email })
     // If user do not exists, return error

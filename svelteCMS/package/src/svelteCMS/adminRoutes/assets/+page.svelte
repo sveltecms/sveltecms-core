@@ -14,6 +14,7 @@
     import FileUploader from "$Packages/fileUploader/FileUploader.svelte";
     import Assets from "$Comps/shared/assets/Assets.svelte"
     import Button from "$Comps/Button.svelte"
+    import NoResult from "$Comps/NoResult.svelte";
     /** Handle file selected from file uploader */
     async function handleFileSelect(e:any) {
         const selectedAsset:AssetData = e.detail
@@ -53,7 +54,7 @@
         showLoadMoreBtn = false
         pageNumber = 1
     }
-    // Variables
+    // Variables 
     const assetsApiBasePath = `${svelteCMS.config.apiBasePath}/assets`
     /** Indicate if file uploader is open or not */
     let isFileUploaderOpen:boolean = false
@@ -65,8 +66,12 @@
 </script>
 
 <FileUploader bind:open={isFileUploaderOpen} apiBaseUrl={assetsApiBasePath} on:select={handleFileSelect}/>
-<TitleButton title="All Assets" on:click={()=>isFileUploaderOpen=true} icon={PlusIcon}/>
-<Assets assets={$ASSETS}/>
-{#if showLoadMoreBtn}
-    <Button loading={isGettingMoreAssets} text="Load more" centerBtn={true} --width="fit-content" on:click={loadMoreAssets}/>
+{#if $ASSETS.length > 0}
+    <TitleButton title="All Assets" on:click={()=>isFileUploaderOpen=true} icon={PlusIcon}/>
+    <Assets assets={$ASSETS}/>
+    {#if showLoadMoreBtn}
+        <Button loading={isGettingMoreAssets} text="Load more" centerBtn={true} --width="fit-content" on:click={loadMoreAssets}/>
+    {/if}
+{:else}
+    <NoResult title="No assets" subTitle="Please some assets" href="/admin/assets" hrefText="Add assets" on:click={()=>isFileUploaderOpen=true}/>
 {/if}

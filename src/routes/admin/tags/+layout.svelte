@@ -1,8 +1,9 @@
 <script>
-    import { TAGS_ROUTES } from "$Stores"
+    import { ROUTES } from "$Stores"
     import { capitalize } from "$Utils";
     import InPageLinks from "$Comps/shared/inPageLink/Links.svelte"
-    $: links = $TAGS_ROUTES.map(name=>{return{ title:capitalize(name),href:`/admin/tags/${name}`}})
+    $: routesWithTags = $ROUTES.filter(route=>route.includeTags==="yes")
+    $: links = routesWithTags.map(route=>{ return{ title:capitalize(route.title),href:`/admin/tags/${route.ID}`} })
 </script>
 
 <div class="page">

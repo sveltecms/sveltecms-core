@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { CATEGORIES_ROUTES,TAGS_ROUTES } from "$Stores"
+    import { ROUTES } from "$Stores"
     // Components
     import Link from "./Link.svelte"
     import ExternalLink from "./ExternalLink.svelte"
@@ -10,12 +10,15 @@
     import CategoriesIcon from "$Icons/Tags.svelte"
     import UsersIcon from "$Icons/People.svelte"
     import AssetsIcon from "$Icons/Images.svelte"
+    import SettingsIcon from "$Icons/Gear.svelte"
     // import SettingsIcon from "$Icons/Gear.svelte"
     import DisplayIcon from "$Icons/Display.svelte"
+    $: routesWithCategories = $ROUTES.filter(route=>route.includeCategories==="yes")
+    $: routesWithTags = $ROUTES.filter(route=>route.includeTags==="yes")
     /** If any routes includes categories, use one of the as the default categories link */
-    $: categoriesLink = $CATEGORIES_ROUTES.length>0 ? `/admin/categories/${$CATEGORIES_ROUTES[0]}` : "/admin/categories"
+    $: categoriesLink = routesWithCategories.length>0 ? `/admin/categories/${routesWithCategories[0].ID}` : "/admin/categories"
     /** If any routes includes tags, use one of the as the default tags link */
-    $: tagsLink = $TAGS_ROUTES.length>0 ? `/admin/tags/${$TAGS_ROUTES[0]}` : "/admin/tags"
+    $: tagsLink = routesWithTags.length>0 ? `/admin/tags/${routesWithTags[0].ID}` : "/admin/tags"
 </script>
 
 <ul class="links">
@@ -25,6 +28,7 @@
     <Link text="Tags" href={tagsLink} icon={TagsIcon}/>
     <Link text="users" href="/admin/users" icon={UsersIcon}/>
     <Link text="Assets" href="/admin/assets" icon={AssetsIcon}/>
+    <Link text="Settings" href="/admin/settings" icon={SettingsIcon}/>
     <ExternalLink text="Preview" href="/" icon={DisplayIcon}/>
 </ul>
 

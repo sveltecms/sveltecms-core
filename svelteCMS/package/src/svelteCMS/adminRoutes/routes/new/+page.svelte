@@ -52,7 +52,7 @@
             const realValue = getRealValue(elementData.type)
             routeData.elements[elementIndex] = {...elementData,value:realValue}
         }
-        // Add status by default when addnig new route
+        // Add status by default when adding new route
         if(addingNewRoute) routeData.elements.unshift({ ID:"status",name:"Status",type:"status",value:"public" })
         // Publish or update routes
         const apiResponse:CreateRouteRes = await postJson(apiPath,routeData)
@@ -89,7 +89,7 @@
     // Variables
     /** Is adding new route or updating route*/
     let loading:boolean
-    /** Check for inputs error if not filded */
+    /** Check for inputs error if not filled */
     let checkError:boolean = false
     $: IDerror = checkError && routeData.ID.trim().length===0
     $: titleError = checkError && routeData.title.trim().length===0

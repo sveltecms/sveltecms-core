@@ -1,22 +1,17 @@
-import db from "$Database"
+import cms from "$Cms"
 import svelteCMS from "$svelteCMS"
-import type { RouteData, UserData } from "$Types"
-import type { AssetData } from "$Packages/fileUploader/types"
 import type { PageServerLoad } from "./$types"
 
 export const load:PageServerLoad = async ()=>{
     // Get assets count
-    const assetsCollection = db.collection(svelteCMS.config.acn)
-    const assetsCount = await assetsCollection.countDocuments()
-    const assets:AssetData[] = await assetsCollection.find({}).limit(8).map((data:any)=>{ data['_id']=data['_id'].toString() ; return data }).toArray()
+    const assets = await cms.Fetch.assets({filter:{},count:svelteCMS.config.assetsPerPage})
+    const assetsCount = await cms.Fetch.assetsCount()
     // Get routes count
-    const routesCollection = db.collection(svelteCMS.config.rcn)
-    const routesCount = await routesCollection.countDocuments()
-    const routes:RouteData[] = await routesCollection.find({}).limit(5).map((data:any)=>{ data['_id']=data['_id'].toString() ; return data }).toArray()
+    const routesCount = await cms.Fetch.routesCount()
+    const routes = await cms.Fetch.routes({ filter:{},count:svelteCMS.config.routesPerPage })
     // Get users count
-    const usersCollection = db.collection(svelteCMS.config.ucn)
-    const usersCount = await usersCollection.countDocuments()
-    const users:UserData[] = await usersCollection.find({email:{$ne:"root@sveltecms.dev"}}).limit(5).map((data:any)=>{ data['_id']=data['_id'].toString() ; return data }).toArray()
+    const usersCount = await cms.Fetch.usersCount()
+    const users = await cms.Fetch.users({ filter:{},count:svelteCMS.config.usersPerPage })
     // result
     const stats = [
         { name:"Routes", count:routesCount, href:"/admin/routes" },

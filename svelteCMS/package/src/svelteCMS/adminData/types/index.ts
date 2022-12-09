@@ -1,4 +1,5 @@
 import type { AssetData } from "$Packages/fileUploader/types"
+import type { ObjectId } from "mongodb"
 
 /** Routes key objects */
 export type RoutesKeysData = {
@@ -108,3 +109,41 @@ export type UserLoad = {
 }
 /** Data return from user object */
 export interface UserData extends UserLoad{ _id:any }
+
+/** Current project data */
+export type ProjectData = {
+    /** Should we allow new user to signUp */
+    allowNewUser:boolean
+    elementLinkedToAssetData:{ collection:any,element:any }
+}
+
+export type LinkedAssetLoad = {
+    /** Collection name */
+    collection:string
+    /** Collection's element targeting */
+    target:string
+}
+export interface LinkedAssetData extends LinkedAssetLoad {
+    /** MongoDB _id */
+    _id:ObjectId
+}
+export type LinkedCategoryLoad = {
+    /** Collection name */
+    collection:string
+    /** Collection's element targeting */
+    target:string
+}
+export interface LinkedCategoryData extends LinkedAssetLoad {
+    /** MongoDB _id */
+    _id:ObjectId
+}
+export type LinkedTagLoad = {
+    /** Collection name */
+    collection:string
+    /** Collection's element targeting */
+    target:string
+}
+export interface LinkedTagData extends LinkedAssetLoad {
+    /** MongoDB _id */
+    _id:ObjectId
+}

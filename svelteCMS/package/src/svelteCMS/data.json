@@ -21,7 +21,7 @@
         ],
         [
             "$Cms",
-            "src/admin/cms"
+            "src/admin/cms/cms.server.ts"
         ],
         [
             "$Utils",

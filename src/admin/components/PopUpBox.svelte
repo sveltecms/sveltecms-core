@@ -1,8 +1,10 @@
 <script lang="ts">
     /** Indicate if box is open or close */
     export let open:boolean
-    /** PopUpBox content maxt with*/
-    export let maxWidth:string = "600px"
+    /** PopUpBox content max with*/
+    export let maxWidth:string = "400px"
+    /** PopUpBox content max with*/
+    export let maxHeight:string = "700px"
     import CloseIcon from "$Icons/Close.svelte"
     import { createEventDispatcher } from "svelte";
     /** Close box */
@@ -19,7 +21,7 @@
 
 {#if open}
 <div class="popUpBox" on:click={handleBoxClick}>
-    <div class="content" style="--maxWidth:{maxWidth}">
+    <div class="content" style="--maxWidth:{maxWidth};--maxHeight:{maxHeight}">
         <div class="closeBtn" on:click={handleBoxClick}>
             <CloseIcon />
         </div>
@@ -42,6 +44,7 @@
     }
     .content{
         max-width: var(--maxWidth);
+        max-height: var(--maxHeight);
         width: 95%;
         background-color: var(--bodyBg);
         color: var(--textColor);

@@ -70,8 +70,8 @@
     let showLoadMoreBtn:boolean = $USERS.length >= svelteCMS.config.usersPerPage
 </script>
 
-<PageTitleLink href="/admin/users/new" title="Users" icon={PlusIcon}/>
 {#if $USERS.length > 0}
+    <PageTitleLink href="/admin/users/new" title="Users" icon={PlusIcon}/>
     <Users users={$USERS} on:delete={handleDeleteUser}/>
     {#if showLoadMoreBtn}
         <Button loading={loadingMoreUsers} text="Load more" centerBtn={true} --width="fit-content" on:click={loadMoreUsers}/>

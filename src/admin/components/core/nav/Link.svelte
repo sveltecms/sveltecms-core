@@ -13,10 +13,10 @@
     /** Indicate if current page is a setting page or the settings page */
     $: isSetting = currentPathname.includes("/admin/settings")
     $: active = (isSetting && href.includes("/admin/settings")) ? true : (isARoute && href.includes("/admin/routes")) ? true : (isACategory && href.includes("/admin/categories")) ? true : (isATag && href.includes("/admin/tags")) ? true : (isUsersRoute && href.includes("/admin/users")) ? true : href===currentPathname
-    const atributes = { "data-label-right":"", "data-label":text }
+    const attributes = { "data-label-right":"", "data-label":text }
 </script>
 
-<a {href} {...atributes} data-sveltekit-preload-data class="link" class:active on:click={()=>IS_NAV_OPEN.set(false)}>
+<a {href} {...attributes} data-sveltekit-preload-data class="link" class:active on:click={()=>IS_NAV_OPEN.set(false)}>
     <div class="icon">
         <svelte:component this={icon}/>
     </div>

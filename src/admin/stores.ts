@@ -8,12 +8,6 @@ export const IS_NAV_OPEN:Writable<boolean> = writable(false)
 /** Site routes config, it will be set when /admin/+layout.svelte run */
 export const ROUTES:Writable<RouteData[]> = writable([])
 
-/** List of routes that contains categories */
-export const CATEGORIES_ROUTES:Writable<string[]> = writable([])
-
-/** List of routes that contains tags */
-export const TAGS_ROUTES:Writable<string[]> = writable([])
-
 /** List of assets */
 export const ASSETS:Writable<AssetData[]> = writable([])
 

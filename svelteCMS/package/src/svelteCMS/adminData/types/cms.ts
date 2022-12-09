@@ -1,5 +1,5 @@
 import type { AssetData } from "$Packages/fileUploader/types"
-import type { RouteData, RouteObjectData, UserData } from "$Types"
+import type { CategoryData, RouteData, RouteObjectData, TagData, UserData } from "$Types"
 import type { ObjectId } from "mongodb"
 
 /** Data needed to fetch single route */
@@ -14,6 +14,7 @@ export interface FetchRoutesLoad {
 }
 /** Data returned from fetching routes */
 export type FetchRoutesRes = RouteData[]
+
 
 /** Data needed to fetch single route object */
 export type FetchRouteObjectLoad = { _id:ObjectId } | { [key:string]:any }
@@ -44,6 +45,7 @@ export interface FetchAssetsLoad {
 /** Data returned from fetching assets */
 export type FetchAssetsRes = AssetData[]
 
+
 /** Data needed to fetch single asset */
 export type FetchUserLoad = { _id:ObjectId } | { email:string } | { [key:string]:any } | {}
 /** Data returned from fetching user */
@@ -56,3 +58,33 @@ export interface FetchUsersLoad {
 }
 /** Data returned from fetching users */
 export type FetchUsersRes = UserData[]
+
+
+/** Data needed to fetch single category */
+export type FetchCategoryLoad = { _id:ObjectId,routeID:any } | { name:string,routeID:any } | { [key:string]:any,routeID:any } | { routeID:any }
+/** Data returned from fetching category */
+export type FetchCategoryRes = CategoryData | null
+/** Data needed to fetch category */
+export interface FetchCategoriesLoad {
+    filter:{ _id:ObjectId } | { name:string } | { [key:string]:any } | {}
+    routeID:any
+    count:number
+    pageNumber?:number
+}
+/** Data returned from fetching categories */
+export type FetchCategoriesRes = CategoryData[]
+
+
+/** Data needed to fetch single tag */
+export type FetchTagLoad = { _id:ObjectId,routeID:any } | { name:string,routeID:any } | { [key:string]:any,routeID:any } | { routeID:any }
+/** Data returned from fetching tag */
+export type FetchTagRes = TagData | null
+/** Data needed to fetch tag */
+export interface FetchTagsLoad {
+    filter:{ _id:ObjectId } | { name:string } | { [key:string]:any } | {}
+    routeID:any
+    count:number
+    pageNumber?:number
+}
+/** Data returned from fetching tags */
+export type FetchTagsRes = TagData[]

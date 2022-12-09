@@ -1,7 +1,7 @@
 <script lang="ts">
     /** Api base url - default "/admin/api/assets" */
     export let apiBaseUrl:string
-    /** Wheather file uploader is open or close */
+    /** Whether file uploader is open or close */
     export let open:boolean
     export let assets:AssetData[]
     import type { AssetData } from "../types"

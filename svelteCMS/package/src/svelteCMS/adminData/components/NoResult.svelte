@@ -8,7 +8,7 @@
 <div class="no-result">
     <h2>{title}</h2>
     <h3>{subTitle}</h3>
-    <a data-sveltekit-preload-data {href} class="btn">{hrefText}</a>
+    <a data-sveltekit-preload-data {href} class="btn" on:click>{hrefText}</a>
 </div>
 
 <style>

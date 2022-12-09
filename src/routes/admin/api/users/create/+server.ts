@@ -2,8 +2,7 @@ import db from "$Database"
 import bcrypt from "bcrypt"
 import svelteCMS from "$svelteCMS"
 import { json } from "@sveltejs/kit"
-// @ts-ignore
-import type { RequestHandler } from "./$Types"
+import type { RequestHandler } from "./$types"
 import type { CreateUserLoad,CreateUserRes } from "$Types/api"
 import type { UserLoad } from "$Types"
 
@@ -20,7 +19,13 @@ export const POST:RequestHandler = async({request}) => {
     const hashedPassword = await bcrypt.hash(jsonData.password,10)
     const newUserData:UserLoad = { ...jsonData,password:hashedPassword}
     // Insert new user
-    await usersCollection.insertOne(newUserData)
-    const response:CreateUserRes = { ok:true,msg:`User ${jsonData.firstName} created` }
+    const userInsertedDB = await usersCollection.insertOne(newUserData)
+    if(userInsertedDB.acknowledged){
+        // Return response
+        const response:CreateUserRes = { ok:true,msg:`User ${jsonData.firstName} created` }
+        return json(response) 
+    }
+    // Else return bad response
+    const response:CreateUserRes = { ok:false,msg:`User ${jsonData.firstName} was not created` }
     return json(response) 
 }

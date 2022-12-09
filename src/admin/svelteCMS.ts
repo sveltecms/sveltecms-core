@@ -1,11 +1,30 @@
 import type { AssetData } from "$Packages/fileUploader/types"
-
+import type { UserLoad } from "$Types"
+// bcrypt.hashSync("sveltecms",10)
 const assetDefault:AssetData = {
     _id: "111d45db1000c382457b0111",
     name: "No image",
     path: "no-image.jpeg",
     type: "image",
     extension: "jpeg"
+}
+
+export const defaultAsset:AssetData = {
+    _id: "111d45db1000c382457b0111",
+    name: "No image",
+    path: "no-image.jpeg",
+    type: "image",
+    extension: "jpeg"
+}
+
+export const defaultUser:UserLoad = {
+    firstName: "cms",
+    lastName: "root",
+    email: "root@sveltecms.dev",
+    password: "",
+    image: {...defaultAsset,_id:defaultAsset['_id'].toString()},
+    verified: false,
+    role: "root"
 }
 
 /** All information about svelteCMS */
@@ -49,6 +68,8 @@ export default {
         vap:"/admin/api/assets",
         /** Collection name where routes will be created at */
         rcn:"__routes",
+        /** Collection name for this project data and config */
+        pcn:"__project",
         /** Collection name where users will be created at */
         ucn:"__users",
         /** Collection name for assets */
@@ -59,6 +80,17 @@ export default {
         tagsCollectionBase:"__tags",
         /** Tags collection base */
         tcb:"__tags",
+    },
+    collections:{
+        /** Assets linked to element,categories and other */
+        assets:"__assets",
+        users:"__users",
+        routes:"__routes",
+        linkedAssets:"__linked_assets",
+        linkedCategories:"__linked_categories",
+        linkedTags:"__linked_tags",
+        baseCategories:"__categories",
+        baseTags:"__tags",
     },
     diskPaths:{
         /** Disk path where assets will be storage */

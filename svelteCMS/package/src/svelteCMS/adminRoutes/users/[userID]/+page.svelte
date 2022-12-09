@@ -23,7 +23,7 @@
     // Components
     import Label from "$Elements/Label.svelte";
     import Input from "$Elements/Input.svelte";
-    import EmaiInput from "$Elements/EmaiInput.svelte";
+    import EmailInput from "$Elements/EmailInput.svelte";
     import Button from "$Elements/Button.svelte";
     import ButtonSelector from "$Elements/buttonSelector/ButtonSelector.svelte";
     /** Handle new/update user */
@@ -72,9 +72,9 @@
         <Label text="First name"/>
         <Input placeholder="...Name" bind:value={userData.firstName} error={firstNameError}/>
         <Label text="Last name"/>
-        <Input placeholder="...Lastname" bind:value={userData.lastName} error={lastNameError}/>
+        <Input placeholder="...Last name" bind:value={userData.lastName} error={lastNameError}/>
         <Label text="Email"/>
-        <EmaiInput placeholder="...email" bind:value={userData.email} icon={EmailIcon} error={emailError}/>
+        <EmailInput placeholder="...email" bind:value={userData.email} icon={EmailIcon} error={emailError}/>
     </LeftContent>
     <RightContent>
         <Label text="User role"/>

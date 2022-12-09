@@ -1,8 +1,8 @@
 import db from "$Database"
 import svelteCMS from "$svelteCMS"
 import { json } from "@sveltejs/kit"
-// @ts-ignore
-import type { RequestHandler } from "./$Types"
+import type { CategoryData, CategoryLoad, LinkedAssetData, LinkedAssetLoad, LinkedCategoryData } from "$Types"
+import type { RequestHandler } from "./$types"
 import type { UpdateCategoryLoad,UpdateCategoryRes } from "$Types/api"
 
 export const POST:RequestHandler = async({params,request}) => {
@@ -24,10 +24,42 @@ export const POST:RequestHandler = async({params,request}) => {
         return json(response)
     }
     // Else update category
-    // TODO: update from objects that includes this category
     // @ts-ignore Remove _id to avoid error 
     delete jsonData['_id']
-    const updatedCategoryDB = await categoriesCollection.updateOne({ slug:jsonData.slug },{$set:jsonData})
+    const categoryUpdated = await categoriesCollection.updateOne({ slug:jsonData.slug },{$set:jsonData})
+    if(categoryUpdated.acknowledged){
+        handleAssetLinked(`${svelteCMS.config.ccb}_${routeID}`,jsonData)
+        handleCategoryUpdated(jsonData)
+        // Return response
+        const response:UpdateCategoryRes = { ok:true,msg:`Category:${jsonData.name} was updated` }
+        return json(response) 
+    }
+    // Else return bad response
     const response:UpdateCategoryRes = { ok:true,msg:`Category:${jsonData.name} was updated` }
     return json(response) 
+}
+
+/** Handle linked assets */
+async function handleAssetLinked(collection:string,categoryData:CategoryData|CategoryLoad){
+    if(categoryData.image.path==="no-image.jpeg") return
+    // Run code here
+    const linkedAssetsCollection = db.collection(svelteCMS.collections.linkedAssets)
+    const newLinkedAsset:LinkedAssetLoad = { collection, target: "image" }
+    // Check if linked exists
+    const linkedExists = await linkedAssetsCollection.findOne(newLinkedAsset)
+    // If do not exists, create new linked asset
+    if(!linkedExists) await linkedAssetsCollection.insertOne(newLinkedAsset)
+}
+
+/** Update category where data is linked to */
+async function handleCategoryUpdated(newCategoryData:CategoryLoad){
+    const linkedCategoriesCollection = db.collection(svelteCMS.collections.linkedCategories)
+    const linkedCollections = await linkedCategoriesCollection.find().toArray() 
+    for(const data of linkedCollections){
+        const linkedCategory:LinkedCategoryData = data as any
+        const linkedCollection = db.collection(linkedCategory.collection)
+        const filter = { [`${linkedCategory.target}.slug`]:newCategoryData.slug }
+        // Update Category where Category is being used
+        linkedCollection.updateMany(filter,{$set:{[`${linkedCategory.target}.$`]:newCategoryData}})
+    }
 }

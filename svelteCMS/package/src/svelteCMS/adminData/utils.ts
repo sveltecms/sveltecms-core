@@ -1,6 +1,6 @@
 import slugify from "slugify"
 import svelteCMS from "$svelteCMS"
-import type { RouteLoad,RouteData,ElementData,ElementType,CategoryData,CategoryLoad, TagLoad, TagData,UserLoad, UserData } from "./types"
+import type { RouteLoad,RouteData,ElementData,ElementType,CategoryData,CategoryLoad, TagLoad, TagData,UserLoad, UserData,LinkedAssetData } from "./types"
 
 /** Covert MongoDB ObjectID to string */
 export function objectIdToString(objectId:any){

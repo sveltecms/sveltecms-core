@@ -24,7 +24,6 @@ export const POST:RequestHandler = async({params,request}) => {
         return json(response)
     }
     // Delete object
-    // TODO: update from objects that includes this category
     // @ts-ignore Remove _id to avoid error 
     const deletedCategoryDB = await objectsCollection.deleteOne({ _id:new ObjectId(jsonData._id) })
     const response:DeleteRouteObjectRes = { ok:true,msg:`Object:${jsonData._id} was deleted` }

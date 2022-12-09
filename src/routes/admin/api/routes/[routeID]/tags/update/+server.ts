@@ -4,6 +4,7 @@ import { json } from "@sveltejs/kit"
 // @ts-ignore
 import type { RequestHandler } from "./$Types"
 import type { UpdateTagLoad,UpdateTagRes } from "$Types/api"
+import type { LinkedTagData, TagLoad } from "$Types"
 
 export const POST:RequestHandler = async({params,request}) => {
     const { routeID } = params
@@ -24,10 +25,29 @@ export const POST:RequestHandler = async({params,request}) => {
         return json(response)
     }
     // Else update new tag
-    // TODO: update from objects that includes this tag
     // @ts-ignore Remove _id to avoid error 
     delete jsonData['_id']
     const updatedTagDB = await tagsCollection.updateOne({ slug:jsonData.slug },{$set:jsonData})
-    const response:UpdateTagRes = { ok:true,msg:`Tag:${jsonData.name} updated` }
+    // If tag was updated
+    if(updatedTagDB.acknowledged){
+        handleTagUpdated(jsonData)
+        const response:UpdateTagRes = { ok:true,msg:`Tag:${jsonData.name} updated` }
+        return json(response) 
+    }
+    // If tag was not updated
+    const response:UpdateTagRes = { ok:false,msg:`Error updating tag:${jsonData.name}` }
     return json(response) 
+}
+
+/** Update tag where data is linked to */
+async function handleTagUpdated(newTagData:TagLoad){
+    const linkedTagsCollection = db.collection(svelteCMS.collections.linkedTags)
+    const linkedCollections = await linkedTagsCollection.find().toArray() 
+    for(const data of linkedCollections){
+        const linkedTag:LinkedTagData = data as any
+        const linkedCollection = db.collection(linkedTag.collection)
+        const filter = { [`${linkedTag.target}.slug`]:newTagData.slug }
+        // Update Tag where Tag is being used
+        linkedCollection.updateMany(filter,{$set:{[`${linkedTag.target}.$`]:newTagData}})
+    }
 }

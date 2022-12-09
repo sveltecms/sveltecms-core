@@ -16,10 +16,10 @@ import { globby } from "globby"
 //     }
 // }
 
-const srcFilesList = await globby("./",{expandDirectories:{files: ['*.js']}})
+const srcFilesList = await globby("./src",{expandDirectories:{files: ['*.ts','*.js','*.svelte']}})
 for(const filePath of srcFilesList){
     const fileData = fs.readFileSync(filePath).toString()
-    if(fileData.includes("$svelteCMS")){
+    if(fileData.includes("TAGS_ROUTES")){
         console.log(filePath)
     }
 }

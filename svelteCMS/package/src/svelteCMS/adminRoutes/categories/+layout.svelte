@@ -1,8 +1,9 @@
 <script>
-    import { CATEGORIES_ROUTES } from "$Stores"
+    import { ROUTES } from "$Stores"
     import { capitalize } from "$Utils";
     import InPageLinks from "$Comps/shared/inPageLink/Links.svelte"
-    $: links = $CATEGORIES_ROUTES.map(name=>{return{ title:capitalize(name),href:`/admin/categories/${name}`}})
+    $: routesWithCategories = $ROUTES.filter(route=>route.includeCategories==="yes")
+    $: links = routesWithCategories.map(route=>{ return{ title:capitalize(route.title),href:`/admin/categories/${route.ID}`} })
 </script>
 
 <div class="page">
