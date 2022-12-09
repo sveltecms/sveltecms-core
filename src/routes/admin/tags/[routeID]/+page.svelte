@@ -1,7 +1,6 @@
 <script lang="ts">
     export let data:PageServerData
-    // @ts-ignore
-    import type { PageServerData } from "./$Types"
+    import type { PageServerData } from "./$types"
     import type { TagData } from "$Types";
     import type { DeleteTagLoad,DeleteTagRes } from "$Types/api";
     import type { FetchTagsLoad,FetchTagsRes } from "$Types/cms"

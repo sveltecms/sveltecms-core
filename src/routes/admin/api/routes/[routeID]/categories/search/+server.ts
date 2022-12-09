@@ -1,8 +1,7 @@
 import db from "$Database"
 import svelteCMS from "$svelteCMS"
 import { json } from "@sveltejs/kit"
-// @ts-ignore
-import type { RequestHandler } from "./$Types"
+import type { RequestHandler } from "./$types"
 import type { SearchCategoryLoad,SearchCategoryRes } from "$Types/api"
 
 export const POST:RequestHandler = async({params,request}) => {

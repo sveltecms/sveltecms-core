@@ -1,7 +1,6 @@
 <script lang="ts">
     export let data:PageServerData
-    // @ts-ignore
-    import type { PageServerData } from "./$Types"
+    import type { PageServerData } from "./$types"
     import type { RouteData } from "$Types"
     // To use in edit and new route, just need to update these variables
     let routeData:RouteData = data.routeData

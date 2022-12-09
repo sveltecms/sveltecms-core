@@ -19,3 +19,4 @@ package/node_modules
 test
 package-lock.json
 src/admin/types/dynamically/*
+svelteCMS/test.js

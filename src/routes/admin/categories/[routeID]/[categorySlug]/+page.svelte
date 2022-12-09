@@ -1,8 +1,7 @@
 <script lang="ts">
     // ------------------------------
     export let data:PageServerData
-    // @ts-ignore
-    import type { PageServerData } from "./$Types"
+    import type { PageServerData } from "./$types"
     import type { UpdateCategoryLoad, UpdateCategoryRes } from "$Types/api"
     import { goto } from "$app/navigation";
     import { postJson, wait } from "$Utils";
@@ -31,15 +30,15 @@
         savingUpdates = true
         // Send request
         const apiLoadData:UpdateCategoryLoad = category
-        const apiResposone:UpdateCategoryRes = await postJson(`/routes/${routeID}/categories/update`,apiLoadData)
+        const apiResponse:UpdateCategoryRes = await postJson(`/routes/${routeID}/categories/update`,apiLoadData)
         // If category was updated
-        if(apiResposone.ok){
-            newToast({ type:"ok",msg:apiResposone.msg })
+        if(apiResponse.ok){
+            newToast({ type:"ok",msg:apiResponse.msg })
             await wait(1000)
             goto(`/admin/categories/${routeID}`)
         }
         // Else if category was not updated
-        else newToast({ type:"error",msg:apiResposone.msg })
+        else newToast({ type:"error",msg:apiResponse.msg })
         // Remove loading
         await wait(500)
         savingUpdates = false
