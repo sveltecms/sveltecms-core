@@ -1,90 +1,73 @@
 // @ts-check
-import svelteCMS, { defaultAsset, defaultUser } from "./svelteCMS.js";
-import { pagesRouteData,postsRouteData } from "./defaults.js"
 import fs from "fs"
-import { MongoClient, ObjectId } from "mongodb";
-import"dotenv/config"
-/**
-* @typedef { import("../src/admin/types/index").UserLoad } UserLoad
-* @typedef { import("../src/admin/types/index").LinkedAssetLoad } LinkedAssetLoad
-*/
+import packageJson from "../package.json" assert { type: "json" }
+import svelteConfig from "../svelte.config.js"
+import { execSync } from "child_process";
 
-const cwd = process.cwd()
-// const BUILD_PATH = 
-const assetsPath = `${cwd}/svelteCMS/build/assets`
-const mongoClient = new MongoClient(String(process.env.DATABASE_URL))
-await mongoClient.connect()
-const database = mongoClient.db(process.env.DATABASE_NAME)
-// Database collections
-const assetsCollection = database.collection(svelteCMS.collections.assets)
-const usersCollection = database.collection(svelteCMS.collections.users)
-const routesCollection = database.collection(svelteCMS.collections.routes)
-const linkedAssetsCollection = database.collection(svelteCMS.collections.linkedAssets)
+const CWD = process.cwd()
+const BUILD_PATH = `${CWD}/svelteCMS/package/build`
+const CMS_DATA_PATH = `${BUILD_PATH}/.svelteCMS`
+const ASSETS_PATH = `${CMS_DATA_PATH}/assets`
+/** Needed dependencies */
+const NEEDED_D = [ "bcrypt","mongodb","slugify" ]
+/** Needed dev dependencies */
+const NEEDED_D_D = [ "sass" ]
 
+/** Delete and recreate build folder */
+function mkBuild(){
+    const isBuild = fs.existsSync(BUILD_PATH)
+    // Delete build folder
+    if(isBuild) fs.rmdirSync(BUILD_PATH,{recursive:true})
+    // Create build folder
+    fs.mkdirSync(BUILD_PATH)
+}
 
-/** Copy and update svelteCMS file */
-async function copySvelteCMSPath(){
-    const svelteCMSPath = `${cwd}/src/admin/svelteCMS.ts`
-    const testSvelteCMSPath = `${cwd}/svelteCMS/svelteCMS.js`
+/** Copy admin,images(static) and admin routes folders */
+function copyNeededFolders(){
+    // copy admin data
+    execSync(`cp -a ${CWD}/src/admin/ ${BUILD_PATH}/admin`)
+    // copy admin routes
+    execSync(`cp -a ${CWD}/src/routes/admin/ ${BUILD_PATH}/routes`)
+    // copy admin static folder
+    execSync(`cp -a ${CWD}/static/admin/ ${BUILD_PATH}/images`)
+}
+
+/** Create data.json to save needed data */
+function createNeededJsonData(){
+    const originalDependencies = { ...packageJson.dependencies }
+    const originalDevDependencies = { ...packageJson.devDependencies }
+    const dataJson = { dependencies:{}, devDependencies:{}, alias:{} }
+    // Dependencies needed
+    for(const dependency of Object.entries(originalDependencies)){
+        const [name,value] = dependency
+        if(NEEDED_D.includes(name)) dataJson.dependencies[name]=value
+    }
+    // Dev dependencies needed
+    for(const dependency of Object.entries(originalDevDependencies)){
+        const [name,value] = dependency
+        if(NEEDED_D_D.includes(name)) dataJson.devDependencies[name]=value
+    }
+    // @ts-ignore add alias
+    dataJson.alias = svelteConfig.kit.alias
+    // Save data json
+    const dataJsonPath = `${BUILD_PATH}/data.json`
+    fs.writeFileSync(dataJsonPath,JSON.stringify(dataJson,null,4))
+}
+
+/** Copy svelteCMS.js file to build folder */
+function copySvelteCMSFile(){
+    const svelteCMSPath = `${CWD}/src/admin/svelteCMS.ts`
+    const buildSvelteCMSPath = `${BUILD_PATH}/svelteCMS.js`
     const svelteCMSData = fs.readFileSync(svelteCMSPath).toString()
-    const testSvelteCMSData = svelteCMSData.replace(/import type/g,'// import type').replace(/:\w.*=+/g,' =')
-    fs.writeFileSync(testSvelteCMSPath,testSvelteCMSData)
+    const newSvelteCMSData = svelteCMSData.replace(/import type/g,'// import type').replace(/:\w.*=+/g,' =')
+    fs.writeFileSync(buildSvelteCMSPath,newSvelteCMSData)
+
 }
 
-/** Delete and recreate assets folder */
-async function resetAssetsFolder(){
-    // Delete assets folders
-    if(fs.existsSync(assetsPath)) fs.rmdirSync(assetsPath, { recursive: true })
-    // Create assets folder and it's subfolders
-    fs.mkdirSync(`${assetsPath}`)
-    fs.mkdirSync(`${assetsPath}/images`)
-    fs.mkdirSync(`${assetsPath}/videos`)
-    fs.mkdirSync(`${assetsPath}/audios`)
-    fs.mkdirSync(`${assetsPath}/others`)
-    // Copy default no image founded
-    fs.copyFileSync(`${cwd}/svelteCMS/images/no-image.jpeg`,`${assetsPath}/images/no-image.jpeg`)
+async function Main(){
+    mkBuild()
+    copyNeededFolders()
+    createNeededJsonData()
+    copySvelteCMSFile()
 }
-
-/** Drop main database (svelteCMS) if it exists */
-async function dropMainDatabase(){
-    const databases = await database.admin().listDatabases()
-    const databaseExists = databases.databases.find(data=>data.name===process.env.DATABASE_NAME)
-    if(databaseExists) await database.dropDatabase()
-}
-
-/** Create need default data for svelteCMS */
-async function createDefaultData(){
-    await usersCollection.insertOne(defaultUser)
-    await assetsCollection.insertOne({...defaultAsset,_id:new ObjectId(defaultAsset._id)})
-}
-
-/** Create default routes */
-async function createDefaultRoutes(){
-    // Pages
-    const pagesRouteDataExists = await routesCollection.findOne({ ID:"pages" })
-    if(!pagesRouteDataExists) await routesCollection.insertOne(pagesRouteData)
-    // Posts
-    const postsRouteDataExists = await routesCollection.findOne({ ID:"posts" })
-    if(!postsRouteDataExists) await routesCollection.insertOne(postsRouteData)
-}
-
-/** Create needed default linked assets data for svelteCMS */
-async function createDefaultLinkedAssets(){
-    /** @type { LinkedAssetLoad } */
-    const usersLinkedAsset = { collection: svelteCMS.collections.users, target: "image" }
-    const postsLinkedAsset = { collection: "posts", target: "thumbnail" }
-    await linkedAssetsCollection.insertMany([usersLinkedAsset,postsLinkedAsset])
-}
-
-/** Reset all development data */
-async function resetDev(){
-    await copySvelteCMSPath()
-    await resetAssetsFolder()
-    await dropMainDatabase()
-    await createDefaultLinkedAssets()
-    await createDefaultData()
-    await createDefaultRoutes()
-}
-await resetDev()
-
-await mongoClient.close()
+Main()

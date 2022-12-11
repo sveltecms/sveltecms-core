@@ -41,7 +41,7 @@ async function resetAssetsFolder(){
     fs.mkdirSync(`${assetsPath}/audios`)
     fs.mkdirSync(`${assetsPath}/others`)
     // Copy default no image founded
-    fs.copyFileSync(`${cwd}/svelteCMS/images/no-image.jpeg`,`${assetsPath}/images/no-image.jpeg`)
+    fs.copyFileSync(`${cwd}/svelteCMS/package/build/images/no-image.jpeg`,`${assetsPath}/images/no-image.jpeg`)
 }
 
 /** Drop main database (svelteCMS) if it exists */
